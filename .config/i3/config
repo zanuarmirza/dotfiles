@@ -191,10 +191,10 @@ bindsym $mod+Ctrl+less move workspace to output left
 ## gaps
 default_border pixel 0
 gaps inner 10
-# gaps outer current plus 5
-# gaps horizontal current plus 40
-# gaps outer current toggle 60
+gaps outer 1
 
+smart_borders on
+smart_borders no_gaps
 
 # setup xranr monitor config
 exec --no-startup-id xrandr --output DP-0 --rotate right
