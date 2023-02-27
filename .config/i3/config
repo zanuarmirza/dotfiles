@@ -2,8 +2,8 @@
 exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,gpg,secrets
 
 # setup xranr monitor config
-exec --no-startup-id sleep3 && xrandr --output DP-0 --rotate right
-exec --no-startup-id sleep3 && xrandr --output DP-2 --mode 1920x1080 --rate 144.01
+exec --no-startup-id sleep 3 && xrandr --output DP-0 --rotate right
+exec --no-startup-id sleep 3 && xrandr --output DP-2 --mode 1920x1080 --rate 144.01
 
 # nitrogen startup
 exec --no-startup-id sleep 3 && nitrogen --restore
