@@ -1,4 +1,11 @@
+local telescope = require('telescope')
 local builtin = require('telescope.builtin')
+
+telescope.setup {
+    defaults = {
+        path_display={"truncate"} 
+    }
+}
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>bf', builtin.buffers, {})
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
