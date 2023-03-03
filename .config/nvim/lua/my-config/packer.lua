@@ -23,6 +23,7 @@ return require('packer').startup(function(use)
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
   use { 'numToStr/Comment.nvim' }
+  -- use('RRethy/nvim-treesitter-textsubjects')
   use {
       'nvim-tree/nvim-tree.lua',
       requires = {
