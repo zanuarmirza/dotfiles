@@ -22,7 +22,7 @@ vim.keymap.set('n', '<leader>bf', builtin.buffers, {})
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
 vim.keymap.set('n', '<leader>fr', builtin.resume,{})
 -- install ripgrep when using macOS
-vim.keymap.set('n', '<leader>ps', function()
+vim.keymap.set('n', '<leader>fs', function()
 	builtin.grep_string({search = vim.fn.input("Grep > ") });
 
 end)
