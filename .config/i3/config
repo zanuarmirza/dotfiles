@@ -226,6 +226,9 @@ bar {
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
 
+#focus wraping
+focus_wrapping no
+
 ## gaps
 default_border pixel 2
 gaps inner 10
