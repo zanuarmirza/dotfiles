@@ -6,6 +6,11 @@ vim.keymap.set("n", "<leader>w", "<C-w>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
+-- copy then search
+vim.keymap.set('v', '//', 'y/<C-R>"<CR>N', { noremap = true })
+-- replace from select result
+vim.keymap.set('n', '<leader>r', 'cgn')
+
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
