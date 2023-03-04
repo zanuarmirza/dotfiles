@@ -47,6 +47,20 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+set $lblue #4C9ED9
+set $dblue #2D5B7D
+set $lgrey #EBECED
+set $dgrey #555555
+set $white #FFFFFF
+set $black #000000
+set $red   #DD0000
+
+#                       border  backgr  text   indicator
+client.focused          $white  $lblue  $white $lgrey
+client.focused_inactive $lgrey  $dgrey  $lgrey $lgrey
+client.unfocused        $dgrey  $black  $lgrey $black
+client.urgent           $white  $red    $white $red
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -195,14 +209,25 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
-}
+    status_command i3status
+    colors {
+        background $black
+        statusline $lgrey
+        separator  $lgrey
+
+        #                  border  backgr  text
+        focused_workspace  $white  $lblue  $white
+        active_workspace   $lgrey  $dgrey  $lgrey
+        inactive_workspace $dgrey  $black  $lgrey
+        urgent_workspace   $white  $red    $white
+}}
+
 # move focused workspace between monitors
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
 
 ## gaps
-default_border pixel 0
+default_border pixel 2
 gaps inner 10
 gaps outer 1
 
