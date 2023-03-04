@@ -1,4 +1,5 @@
 local telescope = require('telescope')
+local actions = require('telescope.actions')
 local builtin = require('telescope.builtin')
 local telescopeConfig = require("telescope.config")
 
@@ -15,6 +16,16 @@ telescope.setup {
         --     "--column",
         --     "--smart-case"
         -- }
+    },
+    pickers = {
+        buffers = {
+            -- initial_mode = "normal",
+            mappings = {
+                n = {
+                    ["x"] = actions.delete_buffer + actions.move_to_top,
+                }
+            }
+        }
     }
 }
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
