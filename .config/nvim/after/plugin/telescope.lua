@@ -19,7 +19,7 @@ telescope.setup {
     },
     pickers = {
         buffers = {
-            -- initial_mode = "normal",
+            initial_mode = "normal",
             mappings = {
                 n = {
                     ["x"] = actions.delete_buffer + actions.move_to_top, -- delete buffer at telescope buffer result
