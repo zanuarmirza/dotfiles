@@ -31,7 +31,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "Q", "<nop>")
 -- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-vim.keymap.set("n", "<C-I>", vim.cmd.Neoformat) -- used for prettier format like
+vim.keymap.set("n", "<leader><C-f>", vim.cmd.Neoformat) -- used for prettier format like
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -55,3 +55,7 @@ vim.keymap.set('n', '<C-w><C-left>', '<C-w><')
 vim.keymap.set('n', '<C-w><C-right>', '<C-w>>')
 vim.keymap.set('n', '<C-w><C-up>', '<C-w>+')
 vim.keymap.set('n', '<C-w><C-down>', '<C-w>-')
+
+-- buffer switch
+vim.keymap.set("n", "<leader>bn", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<leader>bp", "<cmd>bnext<cr>", { desc = "Next buffer" })
