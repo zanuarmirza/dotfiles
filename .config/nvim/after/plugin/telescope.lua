@@ -56,3 +56,11 @@ end)
 vim.keymap.set('n', '<leader>fx', function()
     builtin.grep_string({ use_regex = true, additional_args = { '--multiline' }, search = vim.fn.input("Grep > ") });
 end)
+-- standard live grep string
+vim.keymap.set('n', '<leader>flg', function()
+    builtin.live_grep({ use_regex = true });
+end)
+-- multiline refex live grep string
+vim.keymap.set('n', '<leader>flx', function()
+    builtin.live_grep({ use_regex = true, additional_args = { '--multiline' } });
+end)
