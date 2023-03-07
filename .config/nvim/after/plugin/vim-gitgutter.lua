@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<Leader>gd", ":GitGutterDiffOrig<CR>", {})
+vim.keymap.set("n", "<leader>gd", ":GitGutterDiffOrig<CR>", {})
 vim.keymap.set("n", "]h", "<Plug>(GitGutterNextHunk)", {})
 vim.keymap.set("n", "[h", "<Plug>(GitGutterPrevHunk)", {})
 
