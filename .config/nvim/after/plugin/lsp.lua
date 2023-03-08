@@ -49,6 +49,7 @@ lsp.on_attach(function(client, bufnr)
     vim.api.nvim_set_keymap('n', '<leader>vd', '<cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
     -- If you don't want to use the telescope plug-in but still want to see all the errors/warnings, comment out the telescope line and uncomment this:
     -- vim.api.nvim_set_keymap('n', '<leader>vd', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>li', '<cmd>EslintFixAll<CR>', { noremap = true, silent = true })
 end)
 
 -- (Optional) Configure lua language server for neovim
