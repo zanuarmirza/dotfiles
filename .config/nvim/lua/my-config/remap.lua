@@ -8,7 +8,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- copy then search
-vim.keymap.set('v', '//', 'y/<C-R>"<CR>N', { noremap = true })
+vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>N', { noremap = true })
 -- replace from select result
 vim.keymap.set('n', '<leader>r', 'cgn')
 
@@ -59,3 +59,9 @@ vim.keymap.set('n', '<C-w><C-down>', '<C-w>-')
 -- buffer switch
 vim.keymap.set("n", "<leader>bn", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bnext<cr>", { desc = "Next buffer" })
+
+-- quickfix
+vim.keymap.set("n", "cq", "<cmd>cclose<CR>zz",{})
+vim.keymap.set("n", "cn", "<cmd>copen<CR>zz",{})
+vim.keymap.set("n", "cn", "<cmd>cnext<CR>zz",{})
+vim.keymap.set("n", "cp", "<cmd>cprev<CR>zz",{})
