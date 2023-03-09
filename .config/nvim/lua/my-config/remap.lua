@@ -8,7 +8,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- copy then search
-vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>N', { noremap = true })
+vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
 -- replace from select result
 vim.keymap.set('n', '<leader>r', 'cgn')
 
