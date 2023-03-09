@@ -13,6 +13,8 @@ vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>N', { noremap = true })
 vim.keymap.set('n', '<leader>r', 'cgn')
 
 vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "j", "jzz")
+vim.keymap.set("n", "k", "kzz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
