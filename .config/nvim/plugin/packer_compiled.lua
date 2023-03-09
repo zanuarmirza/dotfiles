@@ -205,10 +205,10 @@ _G.packer_plugins = {
     path = "/Users/catalyst/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
-  ["vim-gitgutter"] = {
+  ["vim-signify"] = {
     loaded = true,
-    path = "/Users/catalyst/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
-    url = "https://github.com/airblade/vim-gitgutter"
+    path = "/Users/catalyst/.local/share/nvim/site/pack/packer/start/vim-signify",
+    url = "https://github.com/mhinz/vim-signify"
   }
 }
 

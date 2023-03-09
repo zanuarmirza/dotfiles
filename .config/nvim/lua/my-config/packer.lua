@@ -20,10 +20,7 @@ return require('packer').startup(function(use)
     -- use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
+        run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     }
     use('nvim-treesitter/playground')
     use('theprimeagen/harpoon')
@@ -31,7 +28,8 @@ return require('packer').startup(function(use)
 
     -- git plugins
     use('tpope/vim-fugitive')
-    use('airblade/vim-gitgutter')
+    use('mhinz/vim-signify') 
+    -- use('airblade/vim-gitgutter')
 
     use { 'numToStr/Comment.nvim' }
     -- use('RRethy/nvim-treesitter-textsubjects')
