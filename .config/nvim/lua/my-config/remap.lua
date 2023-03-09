@@ -53,10 +53,11 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 -- resize window
-vim.keymap.set('n', '<C-w><C-left>', '<C-w><')
-vim.keymap.set('n', '<C-w><C-right>', '<C-w>>')
-vim.keymap.set('n', '<C-w><C-up>', '<C-w>+')
-vim.keymap.set('n', '<C-w><C-down>', '<C-w>-')
+vim.keymap.set('n', '<C-w><C-left>', '<C-w>10<')
+vim.keymap.set('n', '<C-w><C-right>', '<C-w>10>')
+vim.keymap.set('n', '<C-w><C-up>', '<C-w>10+')
+vim.keymap.set('n', '<C-w><C-down>', '<C-w>10-')
+
 
 -- buffer switch
 vim.keymap.set("n", "<leader>bn", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
