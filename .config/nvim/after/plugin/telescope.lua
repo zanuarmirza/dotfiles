@@ -38,7 +38,7 @@ telescope.setup {
         --         '--multiline',
         --     },
         -- }
-    }
+    },
 }
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {}) -- find files (fuzzy)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {}) -- show buffer
@@ -46,7 +46,12 @@ vim.keymap.set('n', '<C-p>', builtin.git_files, {}) -- search files at git
 vim.keymap.set('n', '<leader>fr', builtin.resume, {}) -- show latest telescope result
 vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, {}) -- show documents symbols
 vim.keymap.set('n', '<leader>gt', builtin.git_status, {}) -- show git status list
-vim.keymap.set('n', '<leader>o', builtin.oldfiles, {}) -- show oldfiles
+vim.keymap.set('n', '<leader>o', function()
+    builtin.oldfiles({
+        prompt_title = 'Project History',
+        cwd_only = true,
+    })
+end, {}) -- show oldfiles
 -- install ripgrep when using macOS
 -- standard grep string
 vim.keymap.set('n', '<leader>fg', function()
