@@ -28,7 +28,7 @@ return require('packer').startup(function(use)
 
     -- git plugins
     use('tpope/vim-fugitive')
-    use('mhinz/vim-signify') 
+    use('mhinz/vim-signify')
     -- use('airblade/vim-gitgutter')
 
     use { 'numToStr/Comment.nvim' }
