@@ -32,6 +32,7 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]]) -- delete black hole register
 vim.keymap.set({ "n", "v" }, "x", [["_x]]) -- single delete black hole register
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
 
 vim.keymap.set("n", "Q", "<nop>")
 -- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
