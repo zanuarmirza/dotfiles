@@ -1,6 +1,3 @@
-# start keyring
-exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,gpg,secrets
-
 # setup xranr monitor config
 exec --no-startup-id sleep 2 && xrandr --output DP-0 --rotate right
 exec --no-startup-id sleep 2 && xrandr --output DP-2 --mode 1920x1080 --rate 144.01
@@ -209,6 +206,9 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+    mode hide
+    hidden_state hide
+    modifier none
     status_command i3status
     colors {
         background $black
@@ -240,3 +240,8 @@ gaps outer 1
 smart_borders on
 smart_borders no_gaps
 
+# keyring daemon
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=gpg
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11
