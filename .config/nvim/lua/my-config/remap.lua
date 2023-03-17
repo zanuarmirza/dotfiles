@@ -16,8 +16,6 @@ vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
 vim.keymap.set('n', '<leader>r', 'cgn')
 
 vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "j", "jzz", { noremap = true })
-vim.keymap.set("n", "k", "kzz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
@@ -60,10 +58,10 @@ vim.keymap.set('n', 'tn', '<cmd>tabnew<cr>')
 vim.keymap.set('n', 'tq', '<cmd>tabclose<cr>')
 
 -- resize window
-vim.keymap.set('n', '<C-w><C-left>', '<C-w>10<')
-vim.keymap.set('n', '<C-w><C-right>', '<C-w>10>')
-vim.keymap.set('n', '<C-w><C-up>', '<C-w>10+')
-vim.keymap.set('n', '<C-w><C-down>', '<C-w>10-')
+vim.keymap.set('n', '<C-w><C-l>', '<C-w>10<')
+vim.keymap.set('n', '<C-w><C-h>', '<C-w>10>')
+vim.keymap.set('n', '<C-w><C-j>', '<C-w>10+')
+vim.keymap.set('n', '<C-w><C-k>', '<C-w>10-')
 
 
 -- buffer switch
