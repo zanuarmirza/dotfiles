@@ -247,5 +247,5 @@ exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11
 
 # start polybar
-exec --no-startup-id sleep 4 && /home/morza/.config/polybar/cuts/launch.sh
+exec --no-startup-id sleep 4 && /home/morza/.config/polybar/material/launch.sh
 
