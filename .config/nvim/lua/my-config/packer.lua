@@ -9,15 +9,17 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
-    use({
-        'Mofiqul/dracula.nvim',
-        as = 'dracula',
-        config = function()
-            require("dracula").setup()
-            vim.cmd('colorscheme dracula')
-        end
-    })
+    -- use({
+    --     'Mofiqul/dracula.nvim',
+    --     as = 'dracula',
+    --     config = function()
+    --         require("dracula").setup()
+    --         vim.cmd('colorscheme dracula')
+    --     end
+    -- })
+    use 'folke/tokyonight.nvim'
     -- use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+    -- use { "catppuccin/nvim", as = "catppuccin" }
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,

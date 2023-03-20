@@ -1,6 +1,6 @@
 require("lualine").setup({
     options = {
-        theme = 'dracula-nvim'
+        theme = 'tokyonight'
     },
     sections = {
         lualine_x = {
@@ -18,7 +18,8 @@ require("lualine").setup({
         },
     },
     tabline = {
-        lualine_c = { { 'filename', path = 1 } },
+        lualine_b = { { 'filename', path = 1 } },
+        lualine_c = { 'mode' },
         lualine_x = { 'encoding' },
         lualine_y = {},
         lualine_z = { 'tabs' }
