@@ -50,6 +50,7 @@ return require('packer').startup(function(use)
     use('windwp/nvim-ts-autotag')
     -- use('jose-elias-alvarez/null-ls.nvim')
     use('sbdchd/neoformat')
+    use "lukas-reineke/indent-blankline.nvim"
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
