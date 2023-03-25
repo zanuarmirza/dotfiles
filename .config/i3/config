@@ -203,7 +203,7 @@ bindsym $mod+r mode "resize"
 bar {
     mode hide
     hidden_state hide
-    modifier Mod1
+    modifier Mod1+Mod4
     status_command i3status
     colors {
         background $black
