@@ -2,6 +2,7 @@ local telescope = require('telescope')
 local actions = require('telescope.actions')
 local builtin = require('telescope.builtin')
 local telescopeConfig = require("telescope.config")
+telescope.load_extension('luasnip')
 
 telescope.setup {
     defaults = {
