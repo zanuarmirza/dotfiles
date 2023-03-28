@@ -27,6 +27,7 @@ vim.keymap.set("x", "<leader>p", [["_dP]]) -- prevent replacing current register
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- copy to system clipboard
 vim.keymap.set("n", "<leader>Y", [["+Y]]) -- copy line to system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]]) -- delete black hole register
+vim.keymap.set({ "n", "v" }, "c", [["_c]]) -- black hole register 
 vim.keymap.set({ "n", "v" }, "x", [["_x]]) -- single delete black hole register
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
