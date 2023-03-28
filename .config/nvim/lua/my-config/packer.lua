@@ -73,16 +73,10 @@ return require('packer').startup(function(use)
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
     }
-    use({
-        "L3MON4D3/LuaSnip",
-        -- follow latest release.
-        tag = "v1.*",
-        -- install jsregexp (optional!:).
-        run = "make install_jsregexp"
-    })
+    
     use "rafamadriz/friendly-snippets"
     use {
-    "benfowler/telescope-luasnip.nvim",
-    module = "telescope._extensions.luasnip",  -- if you wish to lazy-load
-}
+        "benfowler/telescope-luasnip.nvim",
+        module = "telescope._extensions.luasnip", -- if you wish to lazy-load
+    }
 end)
