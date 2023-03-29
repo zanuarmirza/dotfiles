@@ -1,6 +1,6 @@
 require("lualine").setup({
     options = {
-        theme = 'tokyonight'
+        theme = 'dracula'
     },
     sections = {
         lualine_x = {
@@ -18,7 +18,7 @@ require("lualine").setup({
         },
     },
     tabline = {
-        lualine_b = { { 'filename', path = 1 } },
+        lualine_b = { { 'filename', path = 1,shorting_target = 70} },
         lualine_c = { 'mode' },
         lualine_x = { 'encoding' },
         lualine_y = {},

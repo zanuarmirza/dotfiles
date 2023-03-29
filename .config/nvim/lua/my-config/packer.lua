@@ -9,15 +9,15 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
-    -- use({
-    --     'Mofiqul/dracula.nvim',
-    --     as = 'dracula',
-    --     config = function()
-    --         require("dracula").setup()
-    --         vim.cmd('colorscheme dracula')
-    --     end
-    -- })
-    use 'folke/tokyonight.nvim'
+    use({
+        'Mofiqul/dracula.nvim',
+        as = 'dracula',
+        config = function()
+            require("dracula").setup()
+            vim.cmd('colorscheme dracula')
+        end
+    })
+    -- use 'folke/tokyonight.nvim'
     -- use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     -- use { "catppuccin/nvim", as = "catppuccin" }
     use {
@@ -35,6 +35,7 @@ return require('packer').startup(function(use)
 
     use { 'numToStr/Comment.nvim' }
     -- use('RRethy/nvim-treesitter-textsubjects')
+    
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {
@@ -42,6 +43,17 @@ return require('packer').startup(function(use)
         },
         tag = 'nightly' -- optional, updated every week. (see issue #1193)
     }
+    -- vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+    -- use {
+    --     "nvim-neo-tree/neo-tree.nvim",
+    --     branch = "v2.x",
+    --     requires = {
+    --         "nvim-lua/plenary.nvim",
+    --         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    --         "MunifTanjim/nui.nvim",
+    --     }
+    -- }
     --use ('JoosepAlviste/nvim-ts-context-commentstring')
     use {
         'nvim-lualine/lualine.nvim',
@@ -73,7 +85,7 @@ return require('packer').startup(function(use)
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
     }
-    
+
     use "rafamadriz/friendly-snippets"
     use {
         "benfowler/telescope-luasnip.nvim",
