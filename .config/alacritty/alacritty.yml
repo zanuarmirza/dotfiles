@@ -1,0 +1,7 @@
+font:
+  normal:
+    family: DroidSansMono Nerd Font 
+window:
+  opacity: 0.9
+env:
+  TERM: xterm-256color

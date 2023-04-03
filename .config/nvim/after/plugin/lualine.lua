@@ -18,7 +18,7 @@ require("lualine").setup({
         },
     },
     tabline = {
-        lualine_b = { { 'filename', path = 1,shorting_target = 70} },
+       lualine_b = { { 'filename', path = 1,shorting_target = 0} },
         lualine_c = { 'mode' },
         lualine_x = { 'encoding' },
         lualine_y = {},
