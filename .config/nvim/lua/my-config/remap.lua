@@ -3,6 +3,7 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>q", vim.cmd.quit)
 vim.keymap.set("n", "<leader>wr", vim.cmd.w)
 vim.keymap.set("n", "<leader>wp", ":set wrap! linebreak! <CR>")
+vim.keymap.set("n", "<leader>sl", "/\\%.l")
 
 vim.keymap.set("n", "<leader>w", "<C-w>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
