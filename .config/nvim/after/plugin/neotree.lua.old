@@ -1,3 +1,0 @@
--- vim.keymap.set("n", "<leader>e",vim.cmd.NeoTreeShowToggle )
--- vim.keymap.set("n", "<leader>E",vim.cmd.NeoTreeReveal )
-vim.keymap.set("n", "<leader><C-e>",vim.cmd.NeoTreeFloatToggle)

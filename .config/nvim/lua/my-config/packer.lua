@@ -36,24 +36,24 @@ return require('packer').startup(function(use)
     use { 'numToStr/Comment.nvim' }
     -- use('RRethy/nvim-treesitter-textsubjects')
     
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional, for file icons
-        },
-        tag = 'nightly' -- optional, updated every week. (see issue #1193)
-    }
-    -- vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
     -- use {
-    --     "nvim-neo-tree/neo-tree.nvim",
-    --     branch = "v2.x",
+    --     'nvim-tree/nvim-tree.lua',
     --     requires = {
-    --         "nvim-lua/plenary.nvim",
-    --         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    --         "MunifTanjim/nui.nvim",
-    --     }
+    --         'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    --     },
+    --     tag = 'nightly' -- optional, updated every week. (see issue #1193)
     -- }
+    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+    use {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+        }
+    }
     --use ('JoosepAlviste/nvim-ts-context-commentstring')
     use {
         'nvim-lualine/lualine.nvim',
