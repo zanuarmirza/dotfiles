@@ -72,6 +72,6 @@ vim.keymap.set("n", "<leader>bp", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
 -- quickfix
 vim.keymap.set("n", "cq", "<cmd>cclose<CR>zz", {})
-vim.keymap.set("n", "cn", "<cmd>copen<CR>zz", {})
+vim.keymap.set("n", "co", "<cmd>copen<CR>zz", {})
 vim.keymap.set("n", "cn", "<cmd>cnext<CR>zz", {})
 vim.keymap.set("n", "cp", "<cmd>cprev<CR>zz", {})
