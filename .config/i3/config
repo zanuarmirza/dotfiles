@@ -246,3 +246,7 @@ exec_always --no-startup-id /home/morza/.config/polybar/material/launch.sh
 
 # picom
 exec_always --no-startup-id picom -b --experimental-backends
+
+# screenshot flameshot
+bindsym Print       exec flameshot full
+bindsym Shift+Print exec flameshot gui

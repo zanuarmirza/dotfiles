@@ -10,12 +10,7 @@ return require('packer').startup(function(use)
     }
 
     use({
-        'Mofiqul/dracula.nvim',
-        as = 'dracula',
-        config = function()
-            require("dracula").setup()
-            vim.cmd('colorscheme dracula')
-        end
+        'Mofiqul/dracula.nvim'
     })
     -- use 'folke/tokyonight.nvim'
     -- use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
@@ -35,7 +30,7 @@ return require('packer').startup(function(use)
 
     use { 'numToStr/Comment.nvim' }
     -- use('RRethy/nvim-treesitter-textsubjects')
-    
+
     -- use {
     --     'nvim-tree/nvim-tree.lua',
     --     requires = {
