@@ -1,7 +1,11 @@
 vim.g.mapleader = " "
 -- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>q", vim.cmd.quit)
+vim.keymap.set("n", "<leader>Q", ":q!<CR>")
+
 vim.keymap.set("n", "<leader>wr", vim.cmd.w)
+vim.keymap.set("n", "<leader><CR>", "i<CR><Esc>O")
+
 vim.keymap.set("n", "<leader>wp", ":set wrap! linebreak! <CR>")
 vim.keymap.set("n", "<leader>sl", "/\\%.l")
 
@@ -53,9 +57,9 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 -- vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
 -- vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
-vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
+-- vim.keymap.set("n", "<leader><leader>", function()
+--     vim.cmd("so")
+-- end)
 -- tabs
 vim.keymap.set('n', 'tn', '<cmd>tabnew<cr>')
 vim.keymap.set('n', 'tq', '<cmd>tabclose<cr>')
