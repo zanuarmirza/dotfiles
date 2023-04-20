@@ -9,12 +9,8 @@ vim.keymap.set("n", "<leader><CR>", "i<CR><Esc>O")
 vim.keymap.set("n", "<leader>wp", ":set wrap! linebreak! <CR>")
 vim.keymap.set("n", "<leader>sl", "/\\%.l")
 
-vim.keymap.set("n", "<leader>w", "<C-w>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
-vim.keymap.set("n", "<C-o>", "<C-o>zz")
-vim.keymap.set("n", "<C-i>", "<C-i>zz")
 
 -- copy then search
 vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
@@ -26,14 +22,18 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
+vim.keymap.set("n", "<C-o>", "<C-o>zz")
+vim.keymap.set("n", "<C-i>", "<C-i>zz")
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]]) -- prevent replacing current register with deleted one
 -- next greatest remap ever : asbjornHaland
+-- copy,delete
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- copy to system clipboard
 vim.keymap.set("n", "<leader>Y", [["+Y]]) -- copy line to system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]]) -- delete black hole register
 vim.keymap.set({ "n", "v" }, "c", [["_c]]) -- black hole register 
+vim.keymap.set({ "n", "v" }, "s", [["_s]]) -- single delete then insert black hole register
 vim.keymap.set({ "n", "v" }, "x", [["_x]]) -- single delete black hole register
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -63,7 +63,11 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 -- tabs
 vim.keymap.set('n', 'tn', '<cmd>tabnew<cr>')
 vim.keymap.set('n', 'tq', '<cmd>tabclose<cr>')
+vim.keymap.set('n', 'tl', '<cmd>tabnext<cr>')
+vim.keymap.set('n', 'th', '<cmd>tabprev<cr>')
 
+
+vim.keymap.set("n", "<leader>w", "<C-w>")
 -- resize window
 vim.keymap.set('n', '<C-w><C-l>', '<C-w>10<')
 vim.keymap.set('n', '<C-w><C-h>', '<C-w>10>')
