@@ -72,6 +72,7 @@ require("neo-tree").setup({
             noremap = true,
             nowait = true,
         },
+
         mappings = {
             ["nu"] = "navigate_up",
             ["<space>"] = {
@@ -160,6 +161,15 @@ require("neo-tree").setup({
         -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
         use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
         -- instead of relying on nvim autocmd events.
+        commands = {
+            copy_path_absolute = function(state)
+                local node = state.tree:get_node()
+                local content = node.path
+                print(content)
+                -- relative
+                vim.fn.setreg('"', content )
+            end,
+        },
         window = {
             mappings = {
                 ["nu"] = "navigate_up",
@@ -173,6 +183,7 @@ require("neo-tree").setup({
                 ["<c-x>"] = "clear_filter",
                 ["[g"] = "prev_git_modified",
                 ["]g"] = "next_git_modified",
+                ["Y"] = "copy_path_absolute",
             },
             fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
                 ["<down>"] = "move_cursor_down",
