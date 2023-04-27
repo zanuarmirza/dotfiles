@@ -56,17 +56,17 @@ end, {}) -- show oldfiles
 -- install ripgrep when using macOS
 -- standard grep string
 vim.keymap.set('n', '<leader>fg', function()
-    builtin.grep_string({ use_regex = true, search = vim.fn.input("Grep > ") });
+    builtin.grep_string({ use_regex = false, search = vim.fn.input("Grep > ") });
 end)
--- multiline refex grep string
+-- multiline regex grep string
 vim.keymap.set('n', '<leader>fx', function()
-    builtin.grep_string({ use_regex = true, additional_args = { '--multiline' }, search = vim.fn.input("Grep > ") });
+    builtin.grep_string({ use_regex = true, additional_args = { '--multiline','--hidden' }, search = vim.fn.input("Grep > ")});
 end)
 -- standard live grep string
 vim.keymap.set('n', '<leader>flg', function()
-    builtin.live_grep({ use_regex = true });
+    builtin.live_grep({ use_regex = false });
 end)
--- multiline refex live grep string
+-- multiline regex live grep string
 vim.keymap.set('n', '<leader>flx', function()
     builtin.live_grep({ use_regex = true, additional_args = { '--multiline' } });
 end)
