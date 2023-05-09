@@ -20,7 +20,7 @@
 
 local dracula = require("dracula")
 dracula.setup({
-    transparent_bg = true,
+    -- transparent_bg = true,
     overrides = {
         VertSplit = { fg = dracula.colors().bright_blue, }
     }
