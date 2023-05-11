@@ -60,7 +60,7 @@ vim.keymap.set('n', '<leader>fg', function()
 end)
 -- multiline regex grep string
 vim.keymap.set('n', '<leader>fx', function()
-    builtin.grep_string({ use_regex = true, additional_args = { '--multiline','--hidden' }, search = vim.fn.input("Grep > ")});
+    builtin.grep_string({ use_regex = true, additional_args = { '--multiline','--hidden','--case-sensitive' }, search = vim.fn.input("Grep > ")});
 end)
 -- standard live grep string
 vim.keymap.set('n', '<leader>flg', function()
