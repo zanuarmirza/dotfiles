@@ -14,7 +14,6 @@ return require('packer').startup(function(use)
         'Mofiqul/dracula.nvim'
     })
     -- use 'folke/tokyonight.nvim'
-    -- use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     -- use { "catppuccin/nvim", as = "catppuccin" }
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -66,28 +65,33 @@ return require('packer').startup(function(use)
     use "lukas-reineke/indent-blankline.nvim"
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v1.x',
+        branch = 'v2.x',
         requires = {
             -- LSP Support
             { 'neovim/nvim-lspconfig' }, -- Required
-            { 'williamboman/mason.nvim' }, -- Optional
+            {
+                                         -- Optional
+                'williamboman/mason.nvim',
+                run = function()
+                    pcall(vim.cmd, 'MasonUpdate')
+                end,
+            },
             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
-            { 'hrsh7th/nvim-cmp' }, -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'hrsh7th/cmp-buffer' }, -- Optional
-            { 'hrsh7th/cmp-path' }, -- Optional
+            { 'hrsh7th/nvim-cmp' },         -- Required
+            { 'hrsh7th/cmp-nvim-lsp' },     -- Required
+            { 'hrsh7th/cmp-buffer' },       -- Optional
+            { 'hrsh7th/cmp-path' },         -- Optional
             { 'saadparwaiz1/cmp_luasnip' }, -- Optional
-            { 'hrsh7th/cmp-nvim-lua' }, -- Optional
+            { 'hrsh7th/cmp-nvim-lua' },     -- Optional
 
             -- Snippets
-            { 'L3MON4D3/LuaSnip' }, -- Required
+            { 'L3MON4D3/LuaSnip' },             -- Required
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
     }
 
-    use "rafamadriz/friendly-snippets"
     use {
         "benfowler/telescope-luasnip.nvim",
         module = "telescope._extensions.luasnip", -- if you wish to lazy-load
