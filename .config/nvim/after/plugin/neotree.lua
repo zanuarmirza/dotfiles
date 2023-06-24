@@ -222,5 +222,6 @@ require("neo-tree").setup({
     }
 })
 
-vim.keymap.set("n", "<leader>e", vim.cmd.NeoTreeRevealToggle)
-vim.keymap.set("n", "<leader>E", vim.cmd.NeoTreeFloatToggle)
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle current reveal_force_cwd position=left<CR>")
+vim.keymap.set("n", "<leader>E", "<cmd>Neotree float toggle current reveal_force_cwo<CR>" )
+

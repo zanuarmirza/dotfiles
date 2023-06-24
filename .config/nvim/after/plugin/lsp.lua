@@ -9,15 +9,6 @@ lsp.ensure_installed({
     'eslint',
     'rust_analyzer',
 })
-lsp.configure('lua-language-server', {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
-})
 
 local ls = require('luasnip')
 local cmp = require('cmp')
@@ -89,6 +80,7 @@ local function organize_imports()
 end
 local lspconfig = require('lspconfig')
 
+lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 lspconfig.tsserver.setup {
     on_attach = on_attach,
     capabilities = capabilities,
