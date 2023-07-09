@@ -7,6 +7,11 @@ telescope.load_extension('luasnip')
 telescope.setup {
     defaults = {
         path_display = { "truncate" },
+        mappings = {
+            n = {
+                ["<C-s>"] = actions.select_horizontal,
+            }
+        }
         -- default argumento
         -- vimgrep_arguments = {
         --     "rg",

@@ -84,8 +84,8 @@ require("neo-tree").setup({
             ["<esc>"] = "revert_preview",
             ["P"] = { "toggle_preview", config = { use_float = true } },
             ["l"] = "focus_preview",
-            ["S"] = "open_split",
-            ["s"] = "open_vsplit",
+            ["<C-s>"] = "open_split",
+            ["<C-v>"] = "open_vsplit",
             -- ["S"] = "split_with_window_picker",
             -- ["s"] = "vsplit_with_window_picker",
             ["t"] = "open_tabnew",
@@ -222,6 +222,6 @@ require("neo-tree").setup({
     }
 })
 
-vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle current reveal_force_cwd position=left<CR>")
-vim.keymap.set("n", "<leader>E", "<cmd>Neotree float toggle current reveal_force_cwo<CR>" )
+vim.keymap.set("n", "<leader>E", "<cmd>Neotree toggle reveal_force_cwd left<CR>")
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree float toggle reveal_force_cwd<CR>" )
 

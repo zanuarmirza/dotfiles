@@ -70,7 +70,7 @@ return require('packer').startup(function(use)
             -- LSP Support
             { 'neovim/nvim-lspconfig' }, -- Required
             {
-                                         -- Optional
+                -- Optional
                 'williamboman/mason.nvim',
                 run = function()
                     pcall(vim.cmd, 'MasonUpdate')
@@ -96,4 +96,7 @@ return require('packer').startup(function(use)
         "benfowler/telescope-luasnip.nvim",
         module = "telescope._extensions.luasnip", -- if you wish to lazy-load
     }
+    use 'simrat39/rust-tools.nvim'
+    use 'nvim-lua/plenary.nvim'
+    use 'mfussenegger/nvim-dap'
 end)
