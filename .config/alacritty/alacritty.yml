@@ -3,7 +3,7 @@ env:
 font:
   normal:
     family: Agave Nerd Font
-  size: 13.0
+  size: 12.2
 import:
  - ~/.config/alacritty/themes/my-theme.yaml
 window:

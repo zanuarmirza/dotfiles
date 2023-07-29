@@ -99,4 +99,5 @@ return require('packer').startup(function(use)
     use 'simrat39/rust-tools.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 end)
