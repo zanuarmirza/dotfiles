@@ -63,6 +63,9 @@ return require('packer').startup(function(use)
     -- use('jose-elias-alvarez/null-ls.nvim')
     use('sbdchd/neoformat')
     use "lukas-reineke/indent-blankline.nvim"
+
+    -- use 'karb94/neoscroll.nvim'
+
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
@@ -100,4 +103,7 @@ return require('packer').startup(function(use)
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+
+
 end)
+

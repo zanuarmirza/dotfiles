@@ -34,7 +34,6 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
-
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter' }, {
     group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
     callback = function()
