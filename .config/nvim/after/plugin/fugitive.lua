@@ -8,3 +8,6 @@ vim.keymap.set("n", "<leader>ge", ":Gedit<CR>")
 vim.keymap.set("n", "<leader>df", ":Gvdiffsplit<CR>")
 -- used nicely with git blame, by placing the cursor to the commit hash in git blame
 vim.keymap.set("n", "<leader>dF", "viwy <C-w>q :Gvdiffsplit <C-r>\"<CR>")
+
+vim.keymap.set("n", "<leader>df", ":Gvdiffsplit<CR>")
+vim.keymap.set("n", "<leader>pd", ":Gvdiffsplit !~1<CR>")

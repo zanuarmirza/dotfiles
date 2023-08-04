@@ -81,7 +81,8 @@ require("neo-tree").setup({
             },
             ["<2-LeftMouse>"] = "open",
             ["<cr>"] = "open",
-            ["<esc>"] = "revert_preview",
+            -- ["<esc>"] = "revert_preview",
+            ["q"] = "revert_preview",
             ["P"] = { "toggle_preview", config = { use_float = true } },
             ["l"] = "focus_preview",
             ["<C-s>"] = "open_split",
@@ -119,7 +120,8 @@ require("neo-tree").setup({
             --  }
             --}
             ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
-            ["q"] = "close_window",
+            -- ["q"] = "close_window",
+            ["<esc>"] = "close_windows",
             ["R"] = "refresh",
             ["?"] = "show_help",
             ["<"] = "prev_source",
