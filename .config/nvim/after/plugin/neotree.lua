@@ -4,8 +4,8 @@ require("neo-tree").setup({
     enable_git_status = true,
     enable_diagnostics = true,
     open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-    sort_case_insensitive = false, -- used when sorting files and directories in the tree
-    sort_function = nil, -- use a custom function for sorting files and directories in the tree
+    sort_case_insensitive = false,                                     -- used when sorting files and directories in the tree
+    sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
     -- sort_function = function (a,b)
     --       if a.type == b.type then
     --           return a.path > b.path
@@ -52,8 +52,8 @@ require("neo-tree").setup({
         git_status = {
             symbols = {
                 -- Change type
-                added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                added     = "",  -- or "✚", but this is redundant info if you use git_status_colors on the name
+                modified  = "",  -- or "", but this is redundant info if you use git_status_colors on the name
                 deleted   = "✖", -- this can only be used in the git_status source
                 renamed   = "", -- this can only be used in the git_status source
                 -- Status type
@@ -81,8 +81,7 @@ require("neo-tree").setup({
             },
             ["<2-LeftMouse>"] = "open",
             ["<cr>"] = "open",
-            -- ["<esc>"] = "revert_preview",
-            ["q"] = "revert_preview",
+            ["<esc>"] = "revert_preview",
             ["P"] = { "toggle_preview", config = { use_float = true } },
             ["l"] = "focus_preview",
             ["<C-s>"] = "open_split",
@@ -120,8 +119,7 @@ require("neo-tree").setup({
             --  }
             --}
             ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
-            -- ["q"] = "close_window",
-            ["<esc>"] = "close_windows",
+            ["q"] = "close_window",
             ["R"] = "refresh",
             ["?"] = "show_help",
             ["<"] = "prev_source",
@@ -153,9 +151,9 @@ require("neo-tree").setup({
                 --".null-ls_*",
             },
         },
-        follow_current_file = false, -- This will find and focus the file in the active buffer every
+        follow_current_file = false,            -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = false, -- when true, empty folders will be grouped together
+        group_empty_dirs = false,               -- when true, empty folders will be grouped together
         hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
         -- in whatever position is specified in window.position
         -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -169,8 +167,44 @@ require("neo-tree").setup({
                 local content = node.path
                 print(content)
                 -- relative
-                vim.fn.setreg('"', content )
+                vim.fn.setreg('"', content)
             end,
+            delete = function(state)
+                local inputs = require("neo-tree.ui.inputs")
+                local path = state.tree:get_node().path
+                local msg = "Are you sure you want to trash " .. path
+                inputs.confirm(msg, function(confirmed)
+                    if not confirmed then return end
+
+                    vim.fn.system { "trash", vim.fn.fnameescape(path) }
+                    require("neo-tree.sources.manager").refresh(state.name)
+                end)
+            end,
+
+            -- over write default 'delete_visual' command to 'trash' x n.
+            delete_visual = function(state, selected_nodes)
+                local inputs = require("neo-tree.ui.inputs")
+
+                -- get table items count
+                function GetTableLen(tbl)
+                    local len = 0
+                    for n in pairs(tbl) do
+                        len = len + 1
+                    end
+                    return len
+                end
+
+                local count = GetTableLen(selected_nodes)
+                local msg = "Are you sure you want to trash " .. count .. " files ?"
+                inputs.confirm(msg, function(confirmed)
+                    if not confirmed then return end
+                    for _, node in ipairs(selected_nodes) do
+                        vim.fn.system { "trash", vim.fn.fnameescape(node.path) }
+                    end
+                    require("neo-tree.sources.manager").refresh(state.name)
+                end)
+            end,
+
         },
         window = {
             mappings = {
@@ -187,7 +221,8 @@ require("neo-tree").setup({
                 ["]g"] = "next_git_modified",
                 ["Y"] = "copy_path_absolute",
             },
-            fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
+            fuzzy_finder_mappings = {
+                                      -- define keymaps for filter popup window in fuzzy_finder_mode
                 ["<down>"] = "move_cursor_down",
                 ["<C-n>"] = "move_cursor_down",
                 ["<up>"] = "move_cursor_up",
@@ -198,7 +233,7 @@ require("neo-tree").setup({
     buffers = {
         follow_current_file = true, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = true, -- when true, empty folders will be grouped together
+        group_empty_dirs = true,    -- when true, empty folders will be grouped together
         show_unloaded = true,
         window = {
             mappings = {
@@ -225,5 +260,4 @@ require("neo-tree").setup({
 })
 
 vim.keymap.set("n", "<leader>E", "<cmd>Neotree toggle reveal_force_cwd left<CR>")
-vim.keymap.set("n", "<leader>e", "<cmd>Neotree float toggle reveal_force_cwd<CR>" )
-
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree float toggle reveal_force_cwd<CR>")

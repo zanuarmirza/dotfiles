@@ -36,6 +36,7 @@ return require('packer').startup(function(use)
     use { 'numToStr/Comment.nvim' }
     -- use('RRethy/nvim-treesitter-textsubjects')
 
+    -- ------------- NAVIGATION ----------------------------------
     -- use {
     --     'nvim-tree/nvim-tree.lua',
     --     requires = {
@@ -43,6 +44,7 @@ return require('packer').startup(function(use)
     --     },
     --     tag = 'nightly' -- optional, updated every week. (see issue #1193)
     -- }
+   
     vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
     use {
@@ -54,6 +56,12 @@ return require('packer').startup(function(use)
             "MunifTanjim/nui.nvim",
         }
     }
+    -- use {
+    --     "nvim-telescope/telescope-file-browser.nvim",
+    --     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    -- }
+    -- ------------ NAVIGATION ----------------------------------
+
     --use ('JoosepAlviste/nvim-ts-context-commentstring')
     use {
         'nvim-lualine/lualine.nvim',
@@ -102,8 +110,5 @@ return require('packer').startup(function(use)
     use 'simrat39/rust-tools.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
-    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-
-
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
 end)
-

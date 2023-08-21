@@ -4,8 +4,7 @@ local builtin = require('telescope.builtin')
 local telescopeConfig = require("telescope.config")
 telescope.load_extension('luasnip')
 
-telescope.setup {
-    defaults = {
+telescope.setup { defaults = {
         path_display = { "truncate" },
         mappings = {
             n = {
@@ -75,3 +74,11 @@ end)
 vim.keymap.set('n', '<leader>flx', function()
     builtin.live_grep({ use_regex = true, additional_args = { '--multiline' } });
 end)
+
+-- require("telescope").load_extension "file_browser"
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>e",
+--   ":Telescope file_browser<CR>",
+--   { noremap = true }
+-- )
