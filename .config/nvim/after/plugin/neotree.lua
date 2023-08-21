@@ -1,4 +1,5 @@
 require("neo-tree").setup({
+    hide_root_node = true,
     close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
     popup_border_style = "rounded",
     enable_git_status = true,
@@ -222,7 +223,7 @@ require("neo-tree").setup({
                 ["Y"] = "copy_path_absolute",
             },
             fuzzy_finder_mappings = {
-                                      -- define keymaps for filter popup window in fuzzy_finder_mode
+                -- define keymaps for filter popup window in fuzzy_finder_mode
                 ["<down>"] = "move_cursor_down",
                 ["<C-n>"] = "move_cursor_down",
                 ["<up>"] = "move_cursor_up",
