@@ -230,7 +230,7 @@ focus_wrapping no
 
 ## gaps
 default_border pixel 1
-gaps inner 18
+gaps inner 15
 gaps outer 3
 
 smart_borders on
