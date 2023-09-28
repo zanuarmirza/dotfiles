@@ -40,6 +40,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 set $lblue #4C9ED9
+set $lorg  #F3B233
 set $dblue #2D5B7D
 set $lgrey #EBECED
 set $dgrey #555555
@@ -48,7 +49,7 @@ set $black #000000
 set $red   #DD0000
 
 #                       border  backgr  text   indicator
-client.focused          $white  $lblue  $white $lgrey
+client.focused          $white  $lorg  $white $lgrey
 client.focused_inactive $lgrey  $dgrey  $lgrey $lgrey
 client.unfocused        $dgrey  $black  $lgrey $black
 client.urgent           $white  $red    $white $red
@@ -105,7 +106,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+minus split h
 
 # split in vertical orientation
-bindsym $mod+backslash split v
+bindsym $mod+apostrophe split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -122,7 +123,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Ctrl+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+a focus paren1
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -229,8 +230,8 @@ focus_wrapping no
 
 ## gaps
 default_border pixel 1
-gaps inner 10
-gaps outer 1
+gaps inner 18
+gaps outer 3
 
 smart_borders on
 smart_borders no_gaps
