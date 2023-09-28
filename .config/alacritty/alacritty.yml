@@ -7,4 +7,4 @@ font:
 import:
  - ~/.config/alacritty/themes/my-theme.yaml
 window:
-  opacity: 0.95
+  opacity: 0.90
