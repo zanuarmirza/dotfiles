@@ -12,6 +12,9 @@ vim.keymap.set("n", "<leader>sl", "/\\%.l")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
+vim.keymap.set({"n","v"},"<leader>H","^")
+vim.keymap.set({"n","v"},"<leader>L","$")
+
 -- copy then search
 vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
 -- replace from select result
@@ -43,7 +46,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
 
 vim.keymap.set("n", "Q", "<nop>")
 -- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>F", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader><C-f>", vim.cmd.Neoformat) -- used for prettier format like
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
