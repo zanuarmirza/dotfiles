@@ -44,7 +44,7 @@ return require('packer').startup(function(use)
     --     },
     --     tag = 'nightly' -- optional, updated every week. (see issue #1193)
     -- }
-   
+
     vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
     use {
@@ -111,4 +111,6 @@ return require('packer').startup(function(use)
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+
+    use 'Exafunction/codeium.nvim'
 end)
