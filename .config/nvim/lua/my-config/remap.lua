@@ -12,8 +12,8 @@ vim.keymap.set("n", "<leader>sl", "/\\%.l")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set({ "n", "v" }, "<leader>H", "^")
-vim.keymap.set({ "n", "v" }, "<leader>L", "$")
+vim.keymap.set({ "n", "v" }, "<M-h>", "^")
+vim.keymap.set({ "n", "v" }, "<M-l>", "$")
 
 -- copy then search
 vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
