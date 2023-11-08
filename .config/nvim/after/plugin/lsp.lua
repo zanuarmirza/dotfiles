@@ -19,8 +19,8 @@ local function luasnip_safe_jump_forward()
     end
 end
 local function luasnip_safe_jump_backward()
-    if ls.jumpable( -1) then
-        ls.jump( -1)
+    if ls.jumpable(-1) then
+        ls.jump(-1)
     end
 end
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -82,7 +82,14 @@ end
 local lspconfig = require('lspconfig')
 
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.gopls.setup({})
+lspconfig.denols.setup {
+    on_attach = on_attach,
+    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+}
 lspconfig.tsserver.setup {
+    root_dir = lspconfig.util.root_pattern("package.json"),
+    single_file_support = false,
     on_attach = on_attach,
     capabilities = capabilities,
     commands = {
