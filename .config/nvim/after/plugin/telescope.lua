@@ -33,7 +33,7 @@ telescope.setup { defaults = {
             }
         },
         find_files = {
-            initial_moed = 'insert',
+            initial_mode = 'insert',
         }
         -- grep_string = {
         --     additional_args = {
