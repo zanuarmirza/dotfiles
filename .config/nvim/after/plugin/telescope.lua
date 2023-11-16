@@ -32,6 +32,9 @@ telescope.setup { defaults = {
                 }
             }
         },
+        find_files = {
+            initial_moed = 'insert',
+        }
         -- grep_string = {
         --     additional_args = {
         --         '--color=never',
@@ -69,11 +72,11 @@ vim.keymap.set('n', '<leader>fx', function()
 end)
 -- standard live grep string
 vim.keymap.set('n', '<leader>flg', function()
-    builtin.live_grep({ use_regex = false });
+    builtin.live_grep({ initial_mode="insert", use_regex = false });
 end)
 -- multiline regex live grep string
 vim.keymap.set('n', '<leader>flx', function()
-    builtin.live_grep({ use_regex = true, additional_args = { '--multiline' } });
+    builtin.live_grep({ intial_mode="insert", use_regex = true, additional_args = { '--multiline' } });
 end)
 
 -- require("telescope").load_extension "file_browser"
