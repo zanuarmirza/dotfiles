@@ -9,8 +9,10 @@ telescope.setup { defaults = {
         mappings = {
             n = {
                 ["<C-s>"] = actions.select_horizontal,
+                ["q"] = actions.close
             }
-        }
+        },
+        initial_mode='normal',
         -- default argumento
         -- vimgrep_arguments = {
         --     "rg",
@@ -24,7 +26,6 @@ telescope.setup { defaults = {
     },
     pickers = {
         buffers = {
-            initial_mode = "normal",
             mappings = {
                 n = {
                     ["x"] = actions.delete_buffer + actions.move_to_top, -- delete buffer at telescope buffer result
