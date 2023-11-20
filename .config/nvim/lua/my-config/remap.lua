@@ -71,6 +71,8 @@ vim.keymap.set('n', 'tq', '<cmd>tabclose<cr>')
 vim.keymap.set('n', 'tl', '<cmd>tabnext<cr>')
 vim.keymap.set('n', 'th', '<cmd>tabprev<cr>')
 
+vim.keymap.set('n', 'TH', '<cmd>-tabmove<cr>')
+vim.keymap.set('n', 'TL', '<cmd>+tabmove<cr>')
 
 vim.keymap.set("n", "<leader>w", "<C-w>")
 -- resize window
