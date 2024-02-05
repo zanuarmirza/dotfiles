@@ -177,7 +177,7 @@ require("neo-tree").setup({
                 inputs.confirm(msg, function(confirmed)
                     if not confirmed then return end
 
-                    vim.fn.system { "trash", vim.fn.fnameescape(path) }
+                    vim.fn.system { "trash", path }
                     require("neo-tree.sources.manager").refresh(state.name)
                 end)
             end,
@@ -200,7 +200,7 @@ require("neo-tree").setup({
                 inputs.confirm(msg, function(confirmed)
                     if not confirmed then return end
                     for _, node in ipairs(selected_nodes) do
-                        vim.fn.system { "trash", vim.fn.fnameescape(node.path) }
+                        vim.fn.system { "trash", node.path }
                     end
                     require("neo-tree.sources.manager").refresh(state.name)
                 end)
