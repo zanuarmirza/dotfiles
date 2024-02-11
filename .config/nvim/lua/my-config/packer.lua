@@ -107,7 +107,7 @@ return require('packer').startup(function(use)
         "benfowler/telescope-luasnip.nvim",
         module = "telescope._extensions.luasnip", -- if you wish to lazy-load
     }
-    use 'simrat39/rust-tools.nvim'
+    use 'mrcjkb/rustaceanvim'
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }

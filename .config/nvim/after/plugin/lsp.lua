@@ -4,10 +4,10 @@ local lsp = require('lsp-zero').preset({
     manage_nvim_cmp = true,
     suggest_lsp_servers = true,
 })
+
 lsp.ensure_installed({
     'tsserver',
     'eslint',
-    'rust_analyzer',
 })
 
 local ls = require('luasnip')
