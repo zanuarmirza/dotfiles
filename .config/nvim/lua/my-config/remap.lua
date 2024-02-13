@@ -18,7 +18,7 @@ vim.keymap.set({ "n", "v" }, "<M-l>", "g_")
 -- copy then search
 vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
 -- replace from select result
-vim.keymap.set('n', '<leader>r', 'cgn')
+vim.keymap.set('n', '<leader>rp', 'cgn')
 
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "20<C-d>")

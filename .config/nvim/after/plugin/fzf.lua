@@ -1,7 +1,6 @@
 require("fzf-lua").setup({ "telescope" })
 local actions = require("fzf-lua.actions")
-local m = require("fzf-lua")
-m.setup({
+local m = require("fzf-lua",{
     actions    = {
         files = {
             ["ctrl-s"]  = actions.file_split,
@@ -9,7 +8,7 @@ m.setup({
         buffers = {
             ["ctrl-s"]  = actions.buf_split,
         }
-    },
+    }
 })
 
 vim.keymap.set('n', '<leader>ff', m.files, { silent = true }) -- find files (fuzzy)
@@ -18,6 +17,7 @@ vim.keymap.set('n', '<C-p>', m.git_files, {silent = true}) -- search files at gi
 vim.keymap.set('n', '<leader>fr', m.resume, {}) -- show latest telescope result
 -- vim.keymap.set('n', '<leader>fs', m.lsp_document_symbols, {}) -- show documents symbols
 vim.keymap.set('n', '<leader>gt', m.git_status, {}) -- show git status list
+vim.keymap.set('n', '<leader>f/', m.lgrep_curbuf, {}) -- show git status list
 vim.keymap.set('n', '<leader>o', function()
     m.oldfiles({
         prompt_title = 'Project History',
