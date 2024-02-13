@@ -114,6 +114,7 @@ return require('packer').startup(function(use)
     use 'mrcjkb/rustaceanvim'
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
+    use 'leoluz/nvim-dap-go'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
 
     use 'Exafunction/codeium.vim'

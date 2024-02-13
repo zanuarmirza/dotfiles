@@ -29,5 +29,5 @@ vim.keymap.set('n', '<leader>fg', function()
     m.grep({ search = vim.fn.input("Grep > ") });
 end)
 vim.keymap.set('n', '<leader>flg', function()
-    m.live_grep({ rg_opts = { '--multiline' }});
+    m.live_grep({ rg_opts = '--multiline' });
 end)

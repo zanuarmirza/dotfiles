@@ -13,6 +13,8 @@ require("neotest").setup({
         }),
     },
 })
+
+vim.keymap.set('n', '<leader>rd', function() require("neotest").run.run({strategy = "dap"}) end)
 vim.keymap.set('n', '<leader>rt', function() require('neotest').run.run() end)
 vim.keymap.set('n', '<leader>re', function() require('neotest').output.open() end)
 vim.keymap.set('n', '<leader>RE', function() require('neotest').output_panel.toggle() end)
