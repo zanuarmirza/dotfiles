@@ -14,6 +14,7 @@ local m = require("fzf-lua",{
 vim.keymap.set('n', '<leader>ff', m.files, { silent = true }) -- find files (fuzzy)
 vim.keymap.set('n', '<leader>fb', m.buffers, { silent = true }) -- show buffer
 vim.keymap.set('n', '<C-p>', m.git_files, {silent = true}) -- search files at git
+vim.keymap.set('n', '<C-P>', m.commands, {silent = true}) -- search files at git
 vim.keymap.set('n', '<leader>fr', m.resume, {}) -- show latest telescope result
 -- vim.keymap.set('n', '<leader>fs', m.lsp_document_symbols, {}) -- show documents symbols
 vim.keymap.set('n', '<leader>gt', m.git_status, {}) -- show git status list
