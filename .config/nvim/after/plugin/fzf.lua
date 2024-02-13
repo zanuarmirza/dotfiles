@@ -22,6 +22,8 @@ vim.keymap.set('n', '<leader>o', function()
     m.oldfiles({
         prompt_title = 'Project History',
         cwd_only = true,
+        stat_file         = true,         -- verify files exist on disk
+        include_current_session = true,  -- include bufs from current session
     })
 end, {}) -- show oldfiles
 
