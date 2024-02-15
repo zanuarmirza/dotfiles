@@ -1,6 +1,9 @@
 require("fzf-lua").setup({ "telescope" })
 local actions = require("fzf-lua.actions")
 local m = require("fzf-lua",{
+    files= {
+        { fzf_opts = { ['--keep-right'] = '' }}
+    },
     actions    = {
         files = {
             ["ctrl-s"]  = actions.file_split,
@@ -32,5 +35,9 @@ vim.keymap.set('n', '<leader>fg', function()
     m.grep({ search = vim.fn.input("Grep > ") });
 end)
 vim.keymap.set('n', '<leader>flg', function()
+    m.live_grep();
+end)
+
+vim.keymap.set('n', '<leader>flG', function()
     m.live_grep({ rg_opts = '--multiline' });
 end)
