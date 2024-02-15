@@ -121,11 +121,12 @@ return require('packer').startup(function(use)
     use {
         "nvim-neotest/neotest",
         requires = {
+            "vim-test/vim-test",
             "nvim-lua/plenary.nvim",
             "antoinemadec/FixCursorHold.nvim",
             "nvim-treesitter/nvim-treesitter",
             "nvim-neotest/neotest-go",
-            "nvim-neotest/neotest-jest"
+            "nvim-neotest/neotest-vim-test",
         },
         config = function()
             -- get neotest namespace (api call creates or returns namespace)
