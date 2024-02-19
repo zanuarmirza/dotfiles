@@ -57,6 +57,7 @@ vim.keymap.set('n', '<Leader>lp',
     function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
 vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
 vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+vim.keymap.set('n', '<Leader>gdb', function() require('dap-go').debug_test() end)
 vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function()
     require('dap.ui.widgets').hover()
 end)
