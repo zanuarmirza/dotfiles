@@ -16,18 +16,19 @@ local m = require("fzf-lua", {
 
 vim.keymap.set('n', '<leader>ff', m.files, { silent = true })   -- find files (fuzzy)
 vim.keymap.set('n', '<leader>fb', m.buffers, { silent = true }) -- show buffer
-vim.keymap.set('n', '<C-p>', m.git_files, { silent = true })    -- search files at git
-vim.keymap.set('n', '<C-P>', m.commands, { silent = true })     -- search files at git
+vim.keymap.set('n', '<M-p>', m.git_files, { silent = true })    -- search files at git
+vim.keymap.set('n', '<M-P>', m.commands, { silent = true })     -- search files at git
 vim.keymap.set('n', '<leader>fr', m.resume, {})                 -- show latest telescope result
 -- vim.keymap.set('n', '<leader>fs', m.lsp_document_symbols, {}) -- show documents symbols
 vim.keymap.set('n', '<leader>gt', m.git_status, {})             -- show git status list
 vim.keymap.set('n', '<leader>f/', m.lgrep_curbuf, {})           -- show git status list
 vim.keymap.set('n', '<leader>o', function()
     m.oldfiles({
+        fzf_opts = { ['--keep-right'] = '' } ,
         prompt_title            = 'Project History',
         cwd_only                = true,
         stat_file               = true, -- verify files exist on disk
-        include_current_session = true, -- include bufs from current session
+        -- include_current_session = true, -- include bufs from current session
     })
 end, {})                                -- show oldfiles
 

@@ -37,7 +37,7 @@ lsp.setup_nvim_cmp({
 })
 lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
-
+    local severity_error = { severity = vim.diagnostic.severity.ERROR }
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set("n", "gc", function() vim.lsp.buf.incoming_calls() end, opts)
     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
@@ -48,6 +48,8 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+    vim.keymap.set("n", "]e", function() vim.diagnostic.goto_next(severity_error) end, opts)
+    vim.keymap.set("n", "[e", function() vim.diagnostic.goto_prev(severity_error) end, opts)
     vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
@@ -100,14 +102,14 @@ lspconfig.tsserver.setup {
     }
 }
 lspconfig.tailwindcss.setup({
-  settings = {
-    tailwindCSS = {
-      experimental = {
-        classRegex = {
-          { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-          { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+    settings = {
+        tailwindCSS = {
+            experimental = {
+                classRegex = {
+                    { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                    { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+                },
+            },
         },
-      },
     },
-  },
 })
