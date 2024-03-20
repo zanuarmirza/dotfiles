@@ -34,8 +34,8 @@ return require('packer').startup(function(use)
 
     -- git plugins
     use('tpope/vim-fugitive')
+    use('sindrets/diffview.nvim')
     use('mhinz/vim-signify')
-    use("sindrets/diffview.nvim")
     -- use('airblade/vim-gitgutter')
 
     use { 'numToStr/Comment.nvim' }
