@@ -26,7 +26,8 @@ colors:
     red:     '0xFF4352'
     green:   '0xB8E466'
     yellow:  '0xFFD750'
-    blue:    '0x1BA6FA'
+    blue:    '0xEBEBEB'
     magenta: '0xA578EA'
     cyan:    '0x73FBF1'
-    white:   '0xFEFEF8'
+    white:   '0xEBEBEB'
+
