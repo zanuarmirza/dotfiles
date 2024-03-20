@@ -1,4 +1,4 @@
-require("fzf-lua").setup({
+require("fzf-lua").setup({"telescope",
     winopts = {
         preview = {
             layout = "vertical"
