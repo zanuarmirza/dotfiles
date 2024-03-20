@@ -1,34 +1,32 @@
-require("fzf-lua").setup({ "telescope" })
-local actions = require("fzf-lua.actions")
-local m = require("fzf-lua", {
+require("fzf-lua").setup({
+    winopts = {
+        preview = {
+            layout = "vertical"
+        }
+    },
     files   = {
         { fzf_opts = { ['--keep-right'] = '' } }
     },
-    actions = {
-        files = {
-            ["ctrl-s"] = actions.file_split,
-        },
-        buffers = {
-            ["ctrl-s"] = actions.buf_split,
-        }
-    }
 })
 
-vim.keymap.set('n', '<leader>ff', m.files, { silent = true })   -- find files (fuzzy)
-vim.keymap.set('n', '<leader>fb', m.buffers, { silent = true }) -- show buffer
-vim.keymap.set('n', '<M-p>', m.git_files, { silent = true })    -- search files at git
-vim.keymap.set('n', '<M-P>', m.commands, { silent = true })     -- search files at git
-vim.keymap.set('n', '<leader>fr', m.resume, {})                 -- show latest telescope result
+local m = require("fzf-lua")
+
+vim.keymap.set('n', '<leader>ff', "<cmd>FzfLua files<CR>")        -- find files (fuzzy)
+vim.keymap.set('n', '<leader>fb', "<cmd>Fzflua buffers<CR>")      -- show buffer
+vim.keymap.set('n', '<M-p>', "<cmd>FzfLua git_files<CR>")         -- search files at git
+vim.keymap.set('n', '<M-P>', "<cmd>FzfLua commands<CR>")          -- search files at git
+vim.keymap.set('n', '<leader>fr', "<cmd>FzfLua resume<CR>")       -- show latest telescope result
 -- vim.keymap.set('n', '<leader>fs', m.lsp_document_symbols, {}) -- show documents symbols
-vim.keymap.set('n', '<leader>gt', m.git_status, {})             -- show git status list
-vim.keymap.set('n', '<leader>f/', m.lgrep_curbuf, {})           -- show git status list
+vim.keymap.set('n', '<leader>gt', "<cmd>FzfLua git_status<CR>")   -- show git status list
+vim.keymap.set('n', '<leader>f/', "<cmd>FzfLua lgrep_curbuf<CR>") -- show git status list
+
 vim.keymap.set('n', '<leader>o', function()
     m.oldfiles({
-        fzf_opts = { ['--keep-right'] = '' } ,
+        fzf_opts                = { ['--keep-right'] = '' },
         prompt_title            = 'Project History',
         cwd_only                = true,
         stat_file               = true, -- verify files exist on disk
-        -- include_current_session = true, -- include bufs from current session
+        include_current_session = true, -- include bufs from current session
     })
 end, {})                                -- show oldfiles
 

@@ -107,6 +107,7 @@ return require('packer').startup(function(use)
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
     }
+    use 'stevearc/qf_helper.nvim';
 
     use {
         "benfowler/telescope-luasnip.nvim",
@@ -122,6 +123,7 @@ return require('packer').startup(function(use)
     use {
         "nvim-neotest/neotest",
         requires = {
+            "nvim-neotest/nvim-nio",
             "vim-test/vim-test",
             "nvim-lua/plenary.nvim",
             "antoinemadec/FixCursorHold.nvim",
