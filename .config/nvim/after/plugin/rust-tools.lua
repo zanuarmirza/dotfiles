@@ -1,11 +1,16 @@
 vim.g.rustaceanvim = {
-    -- Plugin configuration
+    inlay_hints = {
+        highlight = "NonText",
+    },
     tools = {
+        -- hover_actions = {
+        --     auto_focus = true,
+        -- },
     },
     -- LSP configuration
     server = {
         on_attach = function(client, bufnr)
-            -- you can also put keymaps in here
+            require("lsp-inlayhints").on_attach(client, bufnr)
         end,
         default_settings = {
             -- rust-analyzer language server configuration

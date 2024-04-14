@@ -113,11 +113,11 @@ return require('packer').startup(function(use)
         "benfowler/telescope-luasnip.nvim",
         module = "telescope._extensions.luasnip", -- if you wish to lazy-load
     }
-    use 'mrcjkb/rustaceanvim'
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use {'mrcjkb/rustaceanvim',requires = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap','lvimuser/lsp-inlayhints.nvim' }}
 
     use 'Exafunction/codeium.vim'
     use {
