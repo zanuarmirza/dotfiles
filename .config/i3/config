@@ -1,5 +1,6 @@
 # setup xranr monitor config
-exec --no-startup-id sleep 2 && xrandr --output DP-0 --rotate right --pos 1920x0 --output DP-2 --mode 1920x1080 --rate 144.01 --pos 0x400 --primary --output HDMI-0 --mode 1920x1080 --pos 3000x400
+exec --no-startup-id sleep 2 && xrandr --output DP-0 --rotate right --pos 1920x0 --output DP-2 --mode 1920x1080 --rate 144.01 --pos 0x400 --primary
+# exec --no-startup-id sleep 2 && xrandr --output DP-0 --rotate right --pos 1920x0 --output DP-2 --mode 1920x1080 --rate 144.01 --pos 0x400 --primary --output HDMI-0 --mode 1920x1080 --pos 3000x400
 # nitrogen startup
 exec --no-startup-id sleep 4 && nitrogen --restore
 
