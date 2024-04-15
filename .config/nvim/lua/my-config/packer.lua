@@ -107,7 +107,14 @@ return require('packer').startup(function(use)
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
     }
-    use 'stevearc/qf_helper.nvim';
+    -- use 'stevearc/qf_helper.nvim';
+    use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
+
+    -- optional
+    use { 'junegunn/fzf', run = function()
+        vim.fn['fzf#install']()
+    end
+    }
 
     use {
         "benfowler/telescope-luasnip.nvim",
@@ -117,18 +124,18 @@ return require('packer').startup(function(use)
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-    use {'mrcjkb/rustaceanvim',requires = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap','lvimuser/lsp-inlayhints.nvim' }}
+    use { 'mrcjkb/rustaceanvim', requires = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap', 'lvimuser/lsp-inlayhints.nvim' } }
 
     use 'Exafunction/codeium.vim'
     use {
         "nvim-neotest/neotest",
         requires = {
+            "nvim-neotest/neotest-go",
             "nvim-neotest/nvim-nio",
             "vim-test/vim-test",
             "nvim-lua/plenary.nvim",
             "antoinemadec/FixCursorHold.nvim",
             "nvim-treesitter/nvim-treesitter",
-            "nvim-neotest/neotest-go",
             "nvim-neotest/neotest-vim-test",
         },
         config = function()
@@ -138,12 +145,11 @@ return require('packer').startup(function(use)
                 virtual_text = {
                     format = function(diagnostic)
                         local message =
-                        diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+                            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
                         return message
                     end,
                 },
             }, neotest_ns)
         end,
     }
-
 end)
