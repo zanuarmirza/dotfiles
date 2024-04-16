@@ -64,6 +64,10 @@ lsp.on_attach(function(client, bufnr)
     vim.api.nvim_set_keymap('n', '<leader>li', '<cmd>EslintFixAll<CR>', { noremap = true, silent = true })
 end)
 
+function ToggleInlay()
+    vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+end
+
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 
@@ -84,7 +88,20 @@ end
 local lspconfig = require('lspconfig')
 
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-lspconfig.gopls.setup({})
+lspconfig.gopls.setup({
+    settings = {
+        gopls = {
+            hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true
+            }
+        }
+    }
+})
 lspconfig.denols.setup {
     on_attach = on_attach,
     root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
@@ -99,6 +116,20 @@ lspconfig.tsserver.setup {
             organize_imports,
             description = "Organize Imports"
         }
+    },
+    settings = {
+        typescript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            }
+        },
     }
 }
 lspconfig.tailwindcss.setup({
