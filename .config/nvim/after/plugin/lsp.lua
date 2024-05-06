@@ -9,6 +9,17 @@ require('mason-lspconfig').setup({
     ensure_installed = { 'tsserver' },
 })
 
+local lsp_status = require('lsp-status')
+
+lsp_status.register_progress()
+lsp_status.config({
+    indicator_errors = 'E',
+    indicator_warnings = 'W',
+    indicator_info = 'i',
+    indicator_hint = '?',
+    indicator_ok = 'Ok',
+})
+
 local ls = require('luasnip')
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
@@ -48,6 +59,7 @@ cmp.setup({
 
 })
 lsp.on_attach(function(client, bufnr)
+    lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr, remap = false }
     local severity_error = { severity = vim.diagnostic.severity.ERROR }
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)

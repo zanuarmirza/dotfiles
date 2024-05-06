@@ -1,9 +1,8 @@
 local lsp_zero = require('lsp-zero')
 
-lsp_zero.on_attach(function(client, bufnr)
-  lsp_zero.default_keymaps({buffer = bufnr})
-end)
+local lsp_status = require('lsp-status')
 
+local capabilities = vim.tbl_extend('keep', lsp_zero.get_capabilities() or {}, lsp_status.capabilities)
 vim.g.rustaceanvim = {
     inlay_hints = {
         highlight = "NonText",
@@ -18,7 +17,8 @@ vim.g.rustaceanvim = {
         -- on_attach = function(client, bufnr)
         --     require("lsp-inlayhints").on_attach(client, bufnr)
         -- end,
-        capabilities = lsp_zero.get_capabilities(),
+        on_attach = lsp_zero.on_attach,
+        capabilities = capabilities,
         default_settings = {
             -- rust-analyzer language server configuration
             ['rust-analyzer'] = {
