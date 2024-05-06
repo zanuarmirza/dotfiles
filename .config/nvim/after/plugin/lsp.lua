@@ -4,10 +4,9 @@ local lsp = require('lsp-zero').preset({
     manage_nvim_cmp = true,
     suggest_lsp_servers = true,
 })
-
-lsp.ensure_installed({
-    'tsserver',
-    'eslint',
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = { 'tsserver' },
 })
 
 local ls = require('luasnip')
@@ -23,17 +22,30 @@ local function luasnip_safe_jump_backward()
         ls.jump(-1)
     end
 end
+
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<Tab>'] = luasnip_safe_jump_forward,
-    ['<S-Tab>'] = luasnip_safe_jump_backward,
-})
-lsp.setup_nvim_cmp({
-    mapping = cmp_mappings
+local cmp_format = require('lsp-zero').cmp_format({ details = true })
+cmp.setup({
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<Tab>'] = luasnip_safe_jump_forward,
+        ['<S-Tab>'] = luasnip_safe_jump_backward,
+    }),
+    snippet = {
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+        end,
+    },
+    --- (Optional) Show source name in completion menu
+    formatting = cmp_format,
+
 })
 lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
@@ -65,11 +77,11 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 function ToggleInlay()
-    vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
 
 -- (Optional) Configure lua language server for neovim
-lsp.nvim_workspace()
+-- lsp.nvim_workspace()
 
 lsp.setup()
 

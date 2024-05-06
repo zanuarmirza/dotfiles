@@ -81,7 +81,7 @@ return require('packer').startup(function(use)
 
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
+        branch = 'v3.x',
         requires = {
             -- LSP Support
             { 'neovim/nvim-lspconfig' }, -- Required
@@ -107,8 +107,8 @@ return require('packer').startup(function(use)
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
     }
-    -- use 'stevearc/qf_helper.nvim';
-    use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
+    use 'stevearc/qf_helper.nvim';
+    -- use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
 
     -- optional
     use { 'junegunn/fzf', run = function()
@@ -124,7 +124,7 @@ return require('packer').startup(function(use)
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-    use { 'mrcjkb/rustaceanvim', requires = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap', 'lvimuser/lsp-inlayhints.nvim' } }
+    use { 'mrcjkb/rustaceanvim', requires = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' } }
 
     use 'Exafunction/codeium.vim'
     use {

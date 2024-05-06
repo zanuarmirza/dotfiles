@@ -16,7 +16,7 @@ vim.keymap.set({ "n", "v" }, "<M-h>", "_")
 vim.keymap.set({ "n", "v" }, "<M-l>", "g_")
 
 -- copy then search
-vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
+-- vim.keymap.set('n', '<leader>/', '/<C-R><C-W><CR>Nzz', { noremap = true })
 -- replace from select result
 vim.keymap.set('n', '<leader>rp', 'cgn')
 

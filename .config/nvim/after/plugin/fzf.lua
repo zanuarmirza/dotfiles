@@ -18,7 +18,7 @@ vim.keymap.set('n', '<M-P>', "<cmd>FzfLua commands<CR>")          -- search file
 vim.keymap.set('n', '<leader>fr', "<cmd>FzfLua resume<CR>")       -- show latest telescope result
 -- vim.keymap.set('n', '<leader>fs', m.lsp_document_symbols, {}) -- show documents symbols
 vim.keymap.set('n', '<leader>gt', "<cmd>FzfLua git_status<CR>")   -- show git status list
-vim.keymap.set('n', '<leader>f/', "<cmd>FzfLua lgrep_curbuf<CR>") -- show git status list
+vim.keymap.set('n', '<leader>/', "<cmd>FzfLua lgrep_curbuf<CR>") -- show git status list
 
 vim.keymap.set('n', '<leader>o', function()
     m.oldfiles({
