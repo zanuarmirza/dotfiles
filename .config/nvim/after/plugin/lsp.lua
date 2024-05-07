@@ -6,7 +6,12 @@ local lsp = require('lsp-zero').preset({
 })
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'tsserver' },
+    ensure_installed = { 'tsserver', 'eslint' },
+    handlers = {
+        function(server_name)
+            require('lspconfig')[server_name].setup({})
+        end,
+    }
 })
 
 local lsp_status = require('lsp-status')
