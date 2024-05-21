@@ -4,6 +4,7 @@ require("lualine").setup({
     },
     sections = {
         lualine_c = { { 'filename', path = 1, shorting_target = 0 }, "require'lsp-status'.status()" },
+        lualine_x = {}
     },
     inactive_sections = {
         lualine_a = {},
