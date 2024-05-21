@@ -3,7 +3,19 @@ require("lualine").setup({
         theme = 'dracula'
     },
     sections = {
-        lualine_c = { "filename", "require'lsp-status'.status()" },
+        lualine_c = { { 'filename', path = 1, shorting_target = 0 }, "require'lsp-status'.status()" },
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { { 'filename', path = 1, shorting_target = 0 } },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {
+        lualine_b = { { 'filename', path = 1, shorting_target = 0 } },
+        lualine_c = {},
         lualine_x = {
             { 'encoding' },
             {
@@ -17,11 +29,6 @@ require("lualine").setup({
             },
             { 'filetype' }
         },
-    },
-    tabline = {
-        lualine_b = { { 'filename', path = 1, shorting_target = 0 } },
-        lualine_c = { 'mode' },
-        lualine_x = { 'encoding' },
         lualine_y = {},
         lualine_z = { 'tabs' }
     }
