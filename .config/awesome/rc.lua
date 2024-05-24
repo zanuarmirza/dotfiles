@@ -16,7 +16,7 @@ user = {
     scratchpad_terminal = "wezterm start --class scratchpad",
     editor = "wezterm start --class editor -e hx",
     browser = "firefox",
-    file_manager = "pcmanfm",
+    file_manager = "thunar",
     term_filemanager = "wezterm start --class term_filemanager -e yazi",
     visual_editor = "",
     openweathermap_key = "d1b3b6a81db867259446b0863d5f9108",
@@ -96,9 +96,6 @@ apps = {
     end,
     clipboard = function()
         awful.spawn.with_shell("clipmenu")
-    end,
-    emoji_picker = function()
-        awful.spawn("rofi -show emoji")
     end,
 }
 
