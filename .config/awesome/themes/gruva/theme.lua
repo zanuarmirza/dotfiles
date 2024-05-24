@@ -68,9 +68,9 @@ theme.fg_minimize                 = theme.black_alt
 
 -- Borders
 -- ===================================================================
-theme.border_width                = dpi(3)
+theme.border_width                = dpi(2)
 theme.border_normal               = theme.light_bg
-theme.border_focus                = theme.blue
+theme.border_focus                = theme.white_alt
 theme.border_radius               = dpi(15)
 theme.widget_border_width         = dpi(2)
 theme.widget_border_color         = theme.light_bg
@@ -79,7 +79,7 @@ theme.widget_border_color         = theme.light_bg
 -- ===================================================================
 theme.wibar_position              = "top"
 theme.wibar_height                = dpi(40)
-theme.wibar_bg                    = theme.black
+theme.wibar_bg                    = theme.bg_normal
 theme.wibar_fg                    = theme.white
 theme.wibar_border_color          = theme.black
 theme.wibar_border_width          = dpi(0)
@@ -94,16 +94,16 @@ theme.taglist_text_occupied       = { " ", " ", " ", " ", " ", "�
 theme.taglist_text_empty          = { " ", " ", " ", " ", " ", " ", " ", " ", " ", " " }
 
 theme.taglist_text_color_empty    = {
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
-    theme.black_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
+    theme.white_alt,
 }
 theme.taglist_text_color_occupied = {
     theme.blue,
