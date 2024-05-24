@@ -474,7 +474,7 @@ for s in screen do
                             forced_width = dpi(24),
                             widget = wibox.widget.textbox,
                         },
-                        top = dpi(0),
+                        top = dpi(5),
                         left = dpi(5),
                         bottom = dpi(5),
                         widget = wibox.container.margin,
@@ -525,7 +525,7 @@ for s in screen do
                             id = "icon_role",
                             widget = wibox.widget.imagebox,
                         },
-                        margins = dpi(2),
+                        margins = dpi(8),
                         widget = wibox.container.margin,
                     },
                     {
@@ -538,17 +538,34 @@ for s in screen do
                 left = dpi(10),
                 right = dpi(10),
                 widget = wibox.container.margin,
+
             },
             -- border_width = dpi(2),
-            -- shape  = gears.shape.rounded_bar,
-            -- 	id = "bg_role",
-            id = "background_role",
+            shape  = gears.shape.rounded_bar,
+            id     = "bg_role",
+            -- id = "background_role",
+            fg     = beautiful.magenta,
+            bg     = beautiful.light_bg,
+
             widget = wibox.container.background,
         },
     })
 
     -- Create a system tray widget
-    s.systray = wibox.widget.systray()
+    beautiful.bg_systray = beautiful.light_bg
+    s.systray = wibox.widget {
+        {
+            wibox.widget.systray(),
+            left   = 10,
+            top    = 2,
+            bottom = 2,
+            right  = 10,
+            widget = wibox.container.margin,
+        },
+
+        bg     = beautiful.light_bg,
+        widget = wibox.container.background,
+    }
     s.systray.visible = true -- can be toggled by a keybind
 
     -- Create the wibox

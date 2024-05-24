@@ -328,8 +328,6 @@ keys.globalkeys = gears.table.join(
     awful.key({ mod }, "a", function()
         awful.spawn.with_shell("bash ~/.config/rofi/launchers/type-6/launcher.sh")
     end, { description = "app launcher", group = "app" }),
-    --- Emoji picker
-    awful.key({ mod }, "e", apps.emoji_picker, { description = "emoji picker", group = "app" }),
     --- Clipboard
     awful.key({ mod }, "v", apps.clipboard, { description = "clipboard", group = "app" }),
 
@@ -386,6 +384,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ mod }, "F2", apps.browser, { description = "web browser", group = "launcher" }),
     -- Spawn gui file manager
     awful.key({ mod }, "F3", apps.file_manager, { description = "file manager", group = "launcher" }),
+    awful.key({ mod }, "e", apps.file_manager, { description = "file_manager", group = "launcher" }),
     -- Terminal file manager
     awful.key({ mod }, "F4", apps.term_filemanager, { description = "term filemanager", group = "launcher" }),
     -- Primary editor
