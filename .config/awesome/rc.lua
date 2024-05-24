@@ -1,666 +1,808 @@
--- awesome_mode: api-level=4:screen=on
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
-pcall(require, "luarocks.loader")
+-- ░█▄█░█▀█░█▀▄░█▀▀░█▀▀░█▀█░█▀█░█▀█░▀█▀░▀░█▀▀░░░█▀█░█░█░█▀▀░█▀▀░█▀█░█▄█░█▀▀
+-- ░█░█░█░█░█▀▄░▀▀█░█▀▀░█░█░█▀█░█▀▀░░█░░░░▀▀█░░░█▀█░█▄█░█▀▀░▀▀█░█░█░█░█░█▀▀
+-- ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░▀░▀░▀░▀░▀░░░▀▀▀░░░▀▀▀░░░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
--- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
--- Widget and layout library
-local wibox = require("wibox")
--- Theme handling library
-local beautiful = require("beautiful")
--- Notification library
-local naughty = require("naughty")
--- Declarative object management
-local ruled = require("ruled")
-local hotkeys_popup = require("awful.hotkeys_popup")
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+-- >> The file that binds everything together.
+local awesome = awesome
+local client = client
+local screen = screen
+local decorations = {}
 
-local dpi = beautiful.xresources.apply_dpi
-
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-naughty.connect_signal("request::display_error", function(message, startup)
-    naughty.notification {
-        urgency = "critical",
-        title   = "Oops, an error happened" .. (startup and " during startup!" or "!"),
-        message = message
-    }
-end)
--- }}}
-
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme-def.lua")
-
--- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nvim"
-editor_cmd = terminal .. " -e " .. editor
-
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
--- }}}
-
--- {{{ Menu
-
-polybar = {
-    { "Kill bar",  function() awful.spawn.with_shell("bash ~/.config/awesome/kpolybar.sh") end },
-    { "Spawn bar", function() awful.spawn.with_shell("bash ~/.config/awesome/spolybar.sh") end },
+-- User variables and preferences
+-- ===================================================================
+user = {
+    terminal = "wezterm start --always-new-process",
+    floating_terminal = "wezterm start --class floating_terminal",
+    scratchpad_terminal = "wezterm start --class scratchpad",
+    editor = "wezterm start --class editor -e hx",
+    browser = "firefox",
+    file_manager = "pcmanfm",
+    term_filemanager = "wezterm start --class term_filemanager -e yazi",
+    visual_editor = "",
+    openweathermap_key = "d1b3b6a81db867259446b0863d5f9108",
+    openweathermap_city_id = {
+        "-7.96", "112.63"
+    },
+    openweathermap_weather_units = "metric",
+    lock_screen_custom_password = "awesome",
+    app_launcher = "bash ~/.config/rofi/launchers/type-6/launcher.sh",
 }
 
-mymainmenu = awful.menu({
-    items = {
-        { "Apps",     function() awful.spawn.with_shell("sleep 0.5s && bash ~/.config/rofi/launchers/type-6/launcher.sh") end },
-        { "Nemo",     function() awful.spawn.with_shell("nemo") end },
-        { "Scrshot",  function() awful.spawn.with_shell("sleep 0.5s && flameshot full") end },
-        { "Terminal", terminal },
-        { "Polybar",  polybar,                                                                                                beautiful.menu_submenu_icon },
-        { "Xkill",    function() awful.spawn.with_shell("sleep 0.5s && xkill") end },
-        { "Restart",  awesome.restart },
-        { "Quit",     function() awesome.quit() end },
-    }
-})
+-- Initialization
+-- ===================================================================
+local beautiful = require("beautiful")
 
--- {{{ Tag layout
+-- Make dpi function global
+dpi = beautiful.xresources.apply_dpi
+
+-- Load AwesomeWM libraries
+local gears = require("gears")
+local gfs = require("gears.filesystem")
+local awful = require("awful")
+require("awful.autofocus")
+-- Default notification library
+local naughty = require("naughty")
+-- Load theme
+beautiful.init(gfs.get_configuration_dir() .. "themes/gruva/" .. "theme.lua")
+
+-- Error handling
+-- ===================================================================
+naughty.connect_signal("request::display_error", function(message, startup)
+    naughty.notification({
+        urgency = "critical",
+        title = "Oops, an error happened" .. (startup and " during startup!" or "!"),
+        message = message,
+    })
+end)
+
+-- Features
+-- ===================================================================
+-- Load helper functions
+local helpers = require("helpers")
+-- Apps
+apps = {
+    -- TODO: switchtotag not working?
+    browser = function()
+        awful.spawn(user.browser, { switchtotag = true })
+    end,
+    file_manager = function()
+        awful.spawn(user.file_manager, { floating = true })
+    end,
+    term_filemanager = function()
+        awful.spawn(user.term_filemanager, { floating = true })
+    end,
+    editor = function()
+        helpers.run_or_raise({ instance = "editor" }, false, user.editor, { switchtotag = true })
+    end,
+    visual_editor = function()
+        helpers.run_or_raise({ class = "" }, false, user.visual_editor, { switchtotag = true })
+    end,
+    volume = function()
+        helpers.run_or_raise({ class = "Pavucontrol" }, true, "pavucontrol")
+    end,
+    process_monitor = function()
+        helpers.run_or_raise(
+            { instance = "bottom" },
+            false,
+            user.terminal .. " --class bottom -e btm",
+            { switchtotag = true }
+        )
+    end,
+    screenshot_full = function()
+        awful.spawn.with_shell("maim -s | swappy -f -")
+    end,
+    screenshot_clipboard = function()
+        awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png")
+    end,
+    clipboard = function()
+        awful.spawn.with_shell("clipmenu")
+    end,
+    emoji_picker = function()
+        awful.spawn("rofi -show emoji")
+    end,
+}
+
+-- Confuguration folder
+require("themes/gruva")
+
+-- Keybinds and mousebinds
+local keys = require("keys")
+
+-- Lock screen
+-- Make sure to install lua-pam as described in the README or configure your
+-- custom password in the 'user' section above
+require("modules.lockscreen")
+-- Window switcher
+require("modules.window_switcher")
+-- Notification center
+require("modules.notification_center")
+
+-- Daemons
+-- Most widgets that display system/external info depend on evil.
+-- Make sure to initialize it last in order to allow all widgets to connect to
+-- their needed evil signals.
+require("evil")
+
+-- Get screen geometry
+-- I am using a single screen setup and I assume that screen geometry will not
+-- change during the session.
+local screen_width = awful.screen.focused().geometry.width
+local screen_height = awful.screen.focused().geometry.height
+
+-- Layouts
+-- ===================================================================
 -- Table of layouts to cover with awful.layout.inc, order matters.
--- tag.connect_signal("request::default_layouts", function()
---     awful.layout.append_default_layouts({
---         awful.layout.suit.spiral.dwindle,
---         awful.layout.suit.tile,
---         awful.layout.suit.floating,
---     })
--- end)
--- }}}
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
+    awful.layout.suit.max,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.tile.top,
+    --awful.layout.suit.fair,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.tile.left,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.corner.nw,
+    --awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.ne,
+    --awful.layout.suit.corner.sw,
+    --awful.layout.suit.corner.se,
 }
 
+-- Wallpaper
+-- ===================================================================
+local function set_wallpaper(s)
+    if beautiful.wallpaper then
+        local wallpaper = beautiful.wallpaper
+        -- If wallpaper is a function, call it with the screen
+        if type(wallpaper) == "function" then
+            wallpaper = wallpaper(s)
+        end
 
--- {{{ Wallpaper
-screen.connect_signal("request::wallpaper", function(s)
-    awful.wallpaper {
-        screen = s,
-        widget = {
-            {
-                image     = beautiful.wallpaper,
-                upscale   = true,
-                downscale = true,
-                widget    = wibox.widget.imagebox,
-            },
-            valign = "center",
-            halign = "center",
-            tiled  = false,
-            widget = wibox.container.tile,
-        }
-    }
-end)
--- }}}
+        -- >> Method 1: Built in wallpaper function
+        -- gears.wallpaper.maximized(wallpaper, s, true)
 
--- {{{ Tags
-screen.connect_signal("request::desktop_decoration", function(s)
-    -- Each screen has its own tag table.
-    local names = { "1", "2", "3", "4", "5" }
-    awful.tag(names, s, awful.layout.layouts[1])
-end)
--- }}}
+        -- >> Method 2: Set theme's wallpaper with feh
+        -- awful.spawn.with_shell("feh --bg-fill " .. wallpaper)
+        awful.spawn.with_shell("feh --no-fehbg --bg-fill ~/Pictures/alena-aenami-stardust-1k.jpg")
 
--- {{{ Mouse bindings
-awful.mouse.append_global_mousebindings({
-    awful.button({}, 3, function() mymainmenu:toggle() end),
-    awful.button({}, 4, awful.tag.viewprev),
-    awful.button({}, 5, awful.tag.viewnext),
-})
--- }}}
-
--- {{{ Calendar widget
-local calendar_widget = require("calendar")
-local cw = calendar_widget({
-    theme = 'catppuccin',
-    placement = 'top center',
-    start_sunday = false,
-    radius = 8,
-})
--- }}}
-
--- {{{ Key bindings
-
--- General Awesome keys
-awful.keyboard.append_global_keybindings({
-    awful.key({ modkey, }, "s", hotkeys_popup.show_help,
-        { description = "show help", group = "awesome" }),
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
-        { description = "reload awesome", group = "awesome" }),
-    awful.key({ modkey, "Shift" }, "q", awesome.quit,
-        { description = "quit awesome", group = "awesome" }),
-    awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
-        { description = "open a terminal", group = "launcher" }),
-
-    awful.key({}, "XF86AudioRaiseVolume",
-        function() awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%") end),
-
-    awful.key({}, "XF86AudioMute", function() awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle") end),
-    awful.key({}, "F6", function() awful.util.spawn("playerctl play-pause", false) end),
-
-    awful.key({}, "F8", function() awful.util.spawn("playerctl next", false) end),
-
-    awful.key({}, "F7", function() awful.util.spawn("playerctl previous", false) end),
-
-    awful.key({}, "XF86AudioLowerVolume",
-        function() awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%") end),
-
-    awful.key({}, "XF86MonBrightnessDown", function() awful.util.spawn("brightnessctl s 10%-") end),
-
-    awful.key({}, "XF86MonBrightnessUp", function() awful.util.spawn("brightnessctl s +10%") end),
-
-    -- clear notification
-    awful.key({ modkey, }, "Delete", function()
-        naughty.destroy_all_notifications()
-    end)
-
-})
-
--- Tags related keybindings
-awful.keyboard.append_global_keybindings({
-    awful.key({ modkey, }, "Left", awful.tag.viewprev,
-        { description = "view previous", group = "tag" }),
-    awful.key({ modkey, }, "Right", awful.tag.viewnext,
-        { description = "view next", group = "tag" }),
-    awful.key({ modkey, }, "Escape", awful.tag.history.restore,
-        { description = "go back", group = "tag" }),
-})
-
--- Focus related keybindings
-awful.keyboard.append_global_keybindings({
-    awful.key({ "Mod1", }, "Tab",
-        function()
-            awful.client.focus.byidx(1)
-        end,
-        { description = "focus next by index", group = "client" }
-    ),
-    awful.key({ modkey, "Control" }, "j", function() awful.screen.focus_relative(1) end,
-        { description = "focus the next screen", group = "screen" }),
-    awful.key({ modkey, "Control" }, "k", function() awful.screen.focus_relative(-1) end,
-        { description = "focus the previous screen", group = "screen" }),
-    awful.key({ modkey, "Control" }, "n",
-        function()
-            local c = awful.client.restore()
-            -- Focus restored client
-            if c then
-                c:activate { raise = true, context = "key.unminimize" }
-            end
-        end,
-        { description = "restore minimized", group = "client" }),
-})
-
--- Layout related keybindings
-awful.keyboard.append_global_keybindings({
-    awful.key({ modkey, "Shift" }, "j", function() awful.client.swap.byidx(1) end,
-        { description = "swap with next client by index", group = "client" }),
-    awful.key({ modkey, "Shift" }, "k", function() awful.client.swap.byidx(-1) end,
-        { description = "swap with previous client by index", group = "client" }),
-    awful.key({ modkey, }, "u", awful.client.urgent.jumpto,
-        { description = "jump to urgent client", group = "client" }),
-    awful.key({ modkey, }, "l", function() awful.tag.incmwfact(0.05) end,
-        { description = "increase master width factor", group = "layout" }),
-    awful.key({ modkey, }, "h", function() awful.tag.incmwfact(-0.05) end,
-        { description = "decrease master width factor", group = "layout" }),
-    awful.key({ modkey, "Shift" }, "h", function() awful.tag.incnmaster(1, nil, true) end,
-        { description = "increase the number of master clients", group = "layout" }),
-    awful.key({ modkey, "Shift" }, "l", function() awful.tag.incnmaster(-1, nil, true) end,
-        { description = "decrease the number of master clients", group = "layout" }),
-    awful.key({ modkey, "Control" }, "h", function() awful.tag.incncol(1, nil, true) end,
-        { description = "increase the number of columns", group = "layout" }),
-    awful.key({ modkey, "Control" }, "l", function() awful.tag.incncol(-1, nil, true) end,
-        { description = "decrease the number of columns", group = "layout" }),
-    awful.key({ modkey, "Control" }, "space", function() awful.layout.inc(1) end,
-        { description = "select next", group = "layout" }),
-    awful.key({ modkey, "Shift" }, "space", function() awful.layout.inc(-1) end,
-        { description = "select previous", group = "layout" }),
-
-    -- Prompt
-    awful.key({ modkey }, "a", function()
-            awful.spawn.with_shell("bash ~/.config/rofi/launchers/type-6/launcher.sh")
-        end,
-        { description = "run rofi apps", group = "launcher" }),
-
-    awful.key({ modkey }, "r", function()
-            awful.spawn.with_shell("bash ~/.config/rofi/launchers/type-6/launcher2.sh")
-        end,
-        { description = "run rofi programs", group = "launcher" }),
-
-    awful.key({ modkey }, "w", function()
-            awful.spawn.with_shell("bash ~/.config/rofi/launchers/type-6/launcher1.sh")
-        end,
-        { description = "run rofi windows", group = "launcher" }),
-
-    awful.key({ modkey }, "e", function()
-            awful.spawn.with_shell("thunar")
-        end,
-        { description = "run thunar", group = "launcher" }),
-
-    awful.key({ modkey }, "`", function()
-            awful.spawn.with_shell("bash ~/.config/rofi/powermenu/type-6/powermenu.sh")
-        end,
-        { description = "power options", group = "awesome" }),
-
-    awful.key({ modkey }, "c", function()
-            cw.toggle()
-        end,
-        { description = "calendar popup", group = "launcher" }),
-
-    awful.key({}, "F4", function()
-            awful.spawn.with_shell("flameshot gui")
-        end,
-        { description = "run flameshot", group = "launcher" }),
-
-    awful.key({ modkey }, "p", function()
-            awful.spawn.with_shell("scrcpy -S --power-off-on-close --window-x 10")
-        end,
-        { description = "run scrcpy", group = "launcher" }),
-
-
-    awful.key({ modkey }, "z", function()
-            awful.spawn.with_shell("bash ~/.config/awesome/kpolybar.sh")
-        end,
-        { description = "kill polybar", group = "launcher" }),
-
-    awful.key({ modkey }, "x", function()
-            awful.spawn.with_shell("bash ~/.config/awesome/spolybar.sh")
-        end,
-        { description = "run polybar", group = "launcher" })
-})
-
-awful.keyboard.append_global_keybindings({
-    awful.key {
-        modifiers   = { modkey },
-        keygroup    = "numrow",
-        description = "only view tag",
-        group       = "tag",
-        on_press    = function(index)
-            local screen = awful.screen.focused()
-            local tag = screen.tags[index]
-            if tag then
-                tag:view_only()
-            end
-        end,
-    },
-    awful.key {
-        modifiers   = { modkey, "Shift" },
-        keygroup    = "numrow",
-        description = "move focused client to tag",
-        group       = "tag",
-        on_press    = function(index)
-            if client.focus then
-                local tag = client.focus.screen.tags[index]
-                if tag then
-                    client.focus:move_to_tag(tag)
-                end
-            end
-        end,
-    }
-})
-
-client.connect_signal("request::default_mousebindings", function()
-    awful.mouse.append_client_mousebindings({
-        awful.button({}, 1, function(c)
-            c:activate { context = "mouse_click" }
-        end),
-        awful.button({ modkey }, 1, function(c)
-            c:activate { context = "mouse_click", action = "mouse_move" }
-        end),
-        awful.button({ modkey }, 3, function(c)
-            c:activate { context = "mouse_click", action = "mouse_resize" }
-        end),
-    })
-end)
-
-client.connect_signal("request::default_keybindings", function()
-    awful.keyboard.append_client_keybindings({
-        awful.key({ modkey, }, "f",
-            function(c)
-                c.fullscreen = not c.fullscreen
-                c:raise()
-            end,
-            { description = "toggle fullscreen", group = "client" }),
-        awful.key({ modkey }, "q", function(c) c:kill() end,
-            { description = "close", group = "client" }),
-        awful.key({ modkey }, "space",
-            function(c)
-                awful.client.floating.toggle(c)
-                c.width = 1000
-                c.height = 550
-                awful.placement.centered(c)
-            end,
-            { description = "toggle floating", group = "client" }),
-        awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
-            { description = "move to master", group = "client" }),
-        awful.key({ modkey, }, "o", function(c) c:move_to_screen() end,
-            { description = "move to screen", group = "client" }),
-        awful.key({ modkey, }, "t", function(c) c.ontop = not c.ontop end,
-            { description = "toggle keep on top", group = "client" }),
-        awful.key({ modkey, }, "n",
-            function(c)
-                -- The client currently has the input focus, so it cannot be
-                -- minimized, since minimized clients can't have the focus.
-                c.minimized = true
-            end,
-            { description = "minimize", group = "client" }),
-        awful.key({ modkey, }, "m",
-            function(c)
-                c.maximized = not c.maximized
-                c:raise()
-            end,
-            { description = "(un)maximize", group = "client" }),
-        awful.key({ modkey, "Control" }, "m",
-            function(c)
-                c.maximized_vertical = not c.maximized_vertical
-                c:raise()
-            end,
-            { description = "(un)maximize vertically", group = "client" }),
-        awful.key({ modkey, "Shift" }, "m",
-            function(c)
-                c.maximized_horizontal = not c.maximized_horizontal
-                c:raise()
-            end,
-            { description = "(un)maximize horizontally", group = "client" }),
-    })
-end)
-
--- }}}
-
--- {{{ Rules
--- Rules to apply to new clients.
-ruled.client.connect_signal("request::rules", function()
-    -- All clients will match this rule.
-    ruled.client.append_rule {
-        id         = "global",
-        rule       = {},
-        properties = {
-            focus     = awful.client.focus.filter,
-            raise     = true,
-            screen    = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen
-        }
-    }
-
-    -- Floating clients.
-    ruled.client.append_rule {
-        id         = "floating",
-        rule_any   = {
-            instance = { "copyq", "pinentry" },
-            class    = {
-                "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
-                "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer"
-            },
-            -- Note that the name property shown in xprop might be set slightly after creation of the client
-            -- and the name shown there might not match defined rules here.
-            name     = {
-                "Event Tester", -- xev.
-            },
-            role     = {
-                "AlarmWindow",   -- Thunderbird's calendar.
-                "ConfigManager", -- Thunderbird's about:config.
-                "pop-up",        -- e.g. Google Chrome's (detached) Developer Tools.
-            }
-        },
-        properties = { floating = true }
-    }
-
-    -- Add titlebars to normal clients and dialogs
-    ruled.client.append_rule {
-        id         = "titlebars",
-        rule_any   = { type = { "normal", "dialog" } },
-        properties = { titlebars_enabled = false }
-    }
-
-    ruled.client.append_rule {
-        rule_any   = {
-            class = { "firefox" }
-        },
-        properties = { screen = 1 }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "chromium" },
-        properties = { screen = 1, tag = "4", floating = true }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "Steam" },
-        properties = { screen = 1, tag = "4", floating = true }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "discord" },
-        properties = { screen = 1, tag = "2" }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "discord-screenaudio" },
-        properties = { screen = 1, tag = "2" }
-    }
-    ruled.client.append_rule {
-        rule_any   = {
-            instance = { "youtube music" }
-        },
-        properties = { screen = 1, tag = "3" }
-    }
-    ruled.client.append_rule {
-        rule_any = {
-            class = { "thunderbird" }
-        },
-        properties = { screen = 1, tag = "3" }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "vscodium" },
-        properties = { screen = 1, tag = "4" }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "dolphin-emu" },
-        properties = { floating = true }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "Windscribe" },
-        properties = { floating = true }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "feh" },
-        properties = { floating = true }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "nm-connection-editor" },
-        properties = { floating = true }
-    }
-
-    ruled.client.append_rule {
-        rule       = { instance = "scrcpy" },
-        properties = { floating = true }
-    }
-    ruled.client.append_rule {
-        rule       = { instance = "polybar" },
-        properties = { border_width = 0 }
-    }
-end)
--- }}}
-
--- {{{ Notifications
-
-naughty.config.defaults.ontop = true
-naughty.config.defaults.screen = awful.screen.focused()
-naughty.config.defaults.timeout = 4
-naughty.config.defaults.title = "Notification"
-naughty.config.defaults.position = "top_right"
-naughty.config.defaults.border_width = 0
-beautiful.notification_spacing = 16
-
-local function create_notif(n)
-    local icon_visibility
-
-    if n.icon == nil then
-        icon_visibility = false
-    else
-        icon_visibility = true
+        -- >> Method 3: Set last wallpaper with feh
+        -- awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
     end
-
-    -- Action widget
-    local action_widget = {
-        {
-            {
-                id = "text_role",
-                align = "center",
-                font = "Product Sans 10",
-                widget = wibox.widget.textbox,
-            },
-            margins = { left = dpi(3), right = dpi(3) },
-            widget = wibox.container.margin,
-        },
-        widget = wibox.container.background,
-    }
-
-    -- Apply action widget ^
-    local actions = wibox.widget {
-        notification = n,
-        base_layout = wibox.widget {
-            spacing = dpi(20),
-            layout = wibox.layout.flex.horizontal,
-        },
-        widget_template = action_widget,
-        widget = naughty.list.actions,
-    }
-
-    local function space_h(length, circumstances)
-        return wibox.widget {
-            forced_width = length,
-            visible = circumstances,
-            layout = wibox.layout.fixed.horizontal,
-        }
-    end
-
-    -- Make other widgets
-    local title = wibox.widget.textbox()
-    title.font = "Product Sans Bold 12"
-    title.align = 'center'
-    title.markup = n.title
-
-    local message = wibox.widget.textbox()
-    message.font = "Product Sans 12"
-    message.align = 'left'
-    message.markup = n.message
-
-    local icon = wibox.widget {
-        nil,
-        {
-            {
-                image = n.icon,
-                visible = icon_visibility,
-                widget = wibox.widget.imagebox,
-            },
-            strategy = "max",
-            width = dpi(115),
-            height = dpi(115),
-            widget = wibox.container.constraint,
-        },
-        expand = 'none',
-        layout = wibox.layout.align.vertical,
-    }
-
-    local container = wibox.widget {
-        {
-            title,
-            {
-                icon,
-                space_h(dpi(25), icon_visibility),
-                message,
-                layout = wibox.layout.fixed.horizontal,
-            },
-            actions,
-            spacing = dpi(20),
-            layout = wibox.layout.fixed.vertical,
-        },
-        margins = dpi(15),
-        widget = wibox.container.margin,
-    }
-
-    naughty.layout.box {
-        notification = n,
-        type = "notification",
-        bg = beautiful.bg,
-        border_width = 0,
-        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 5) end,
-        widget_template = {
-            {
-                {
-                    {
-                        widget = container,
-                    },
-                    strategy = "max",
-                    width = dpi(300),
-                    height = dpi(200),
-                    widget = wibox.container.constraint,
-                },
-                strategy = "min",
-                width = dpi(300),
-                height = dpi(130),
-                widget = wibox.container.constraint,
-            },
-            bg = beautiful.bg,
-            widget = wibox.container.background,
-        }
-    }
 end
 
-naughty.connect_signal("request::display", function(n)
-    create_notif(n)
+-- Set wallpaper
+awful.screen.connect_for_each_screen(function(s)
+    set_wallpaper(s)
 end)
 
-ruled.notification.connect_signal("request::rules", function()
-    ruled.notification.append_rule {
-        rule = {},
-        properties = {
-            screen = awful.screen.focused(),
-            implicit_timeout = 4,
-        }
-    }
-end)
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal("property::geometry", set_wallpaper)
 
+-- Tags
+-- ===================================================================
+-- awful.screen.connect_for_each_screen(function(s)
+--     -- Each screen has its own tag table.
+--     local l = awful.layout.suit -- Alias to save time :)
+--     -- Tag layouts
+--     local layouts = {
+--         l.max,
+--         l.max,
+--         l.max,
+--         l.max,
+--         l.max,
+--         l.max,
+--         l.tile,
+--         l.tile,
+--         l.tile,
+--         l.tile,
+--     }
+
+--     -- Tag names
+--     local tagnames = beautiful.tagnames or { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
+--     -- Create all tags at once (without seperate configuration for each tag)
+--     awful.tag(tagnames, s, layouts)
+
+--     -- Create tags with seperate configuration for each tag
+--     -- awful.tag.add(tagnames[1], {
+--     --     layout = layouts[1],
+--     --     screen = s,
+--     --     master_width_factor = 0.6,
+--     --     selected = true,
+--     -- })
+--     -- ...
+-- end)
 awful.screen.connect_for_each_screen(function(s)
     -- set top padding and bottom padding for top and bottom bars
-    s.padding = { top = 30, left = 0, right = 0, bottom = 0 }
+    s.padding = { top = 10, left = 0, right = 0, bottom = 0 }
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 end)
 
--- }}}
 
--- Autostart
+-- Determines how floating clients should be placed
+local floating_client_placement = function(c)
+    -- If the layout is floating or there are no other visible
+    -- clients, center client
+    if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating or #mouse.screen.clients == 1 then
+        return awful.placement.centered(c, { honor_padding = true, honor_workarea = true })
+    end
 
-awful.spawn.with_shell("bash ~/.config/awesome/autorun.sh")
+    -- Else use this placement
+    local p = awful.placement.no_overlap + awful.placement.no_offscreen
+    return p(c, { honor_padding = true, honor_workarea = true, margins = beautiful.useless_gap * 2 })
+end
 
+local centered_client_placement = function(c)
+    return gears.timer.delayed_call(function()
+        awful.placement.centered(c, { honor_padding = true, honor_workarea = true })
+    end)
+end
+
+-- Rules
+-- ===================================================================
+-- Rules to apply to new clients (through the "manage" signal).
+awful.rules.rules = {
+    {
+        -- All clients will match this rule.
+        rule = {},
+        properties = {
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            focus = awful.client.focus.filter,
+            raise = true,
+            keys = keys.clientkeys,
+            buttons = keys.clientbuttons,
+            screen = awful.screen.focused,
+            size_hints_honor = false,
+            honor_workarea = true,
+            honor_padding = true,
+            maximized = false,
+            titlebars_enabled = beautiful.titlebars_enabled,
+            maximized_horizontal = false,
+            maximized_vertical = false,
+            placement = floating_client_placement,
+        },
+    },
+
+    -- Floating clients
+    {
+        rule_any = {
+            instance = {
+                "floating_terminal",
+                "Devtools", -- Firefox devtools
+            },
+            class = {
+                "Gpick",
+                "Lxappearance",
+                "Nm-connection-editor",
+                "File-roller",
+                "fst",
+                "Nvidia-settings",
+            },
+            name = {
+                "Event Tester", -- xev
+                "MetaMask Notification",
+                "Picture in picture",
+            },
+            role = {
+                "AlarmWindow",
+                "pop-up",
+                "GtkFileChooserDialog",
+                "conversation",
+            },
+            type = {
+                "dialog",
+            },
+        },
+        properties = { floating = true },
+    },
+
+    -- Fullscreen clients
+    {
+        rule_any = {
+            class = {
+                "dota2",
+                "dontstarve_steam",
+            },
+            instance = {
+                "synthetik.exe",
+            },
+        },
+        properties = { fullscreen = true },
+    },
+
+    -- Centered clients
+    {
+        rule_any = {
+            type = {
+                "dialog",
+            },
+            class = {
+                "Steam",
+                "discord",
+                "music",
+                "scratchpad",
+            },
+            instance = {
+                "music",
+                "scratchpad",
+            },
+            role = {
+                "GtkFileChooserDialog",
+                "conversation",
+            },
+        },
+        properties = { placement = centered_client_placement },
+    },
+
+    -- Titlebars ON (explicitly)
+    {
+        rule_any = {
+            type = {
+                "dialog",
+            },
+            role = {
+                "conversation",
+            },
+        },
+        callback = function(c)
+            decorations.show(c)
+        end,
+    },
+
+    -- "Needy": Clients that steal focus when they are urgent
+    {
+        rule_any = {
+            class = {
+                "TelegramDesktop",
+                "firefox",
+                "Nightly",
+            },
+            type = {
+                "dialog",
+            },
+        },
+        callback = function(c)
+            c:connect_signal("property::urgent", function()
+                if c.urgent then
+                    c:jump_to()
+                end
+            end)
+        end,
+    },
+
+    -- Fixed terminal geometry for floating terminals
+    {
+        rule_any = {
+            class = {
+                "Alacritty",
+                "Termite",
+                "mpvtube",
+                "kitty",
+                "st-256color",
+                "st",
+                "URxvt",
+            },
+        },
+        properties = { width = screen_width * 0.45, height = screen_height * 0.5 },
+    },
+
+    -- File chooser dialog
+    {
+        rule_any = { role = { "GtkFileChooserDialog" } },
+        properties = { floating = true, width = screen_width * 0.55, height = screen_height * 0.65 },
+    },
+
+    -- Pavucontrol
+    {
+        rule_any = { class = { "Pavucontrol" } },
+        properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.8 },
+    },
+
+    -- Galculator
+    {
+        rule_any = { class = { "Galculator" } },
+        except_any = { type = { "dialog" } },
+        properties = { floating = true, width = screen_width * 0.2, height = screen_height * 0.4 },
+    },
+
+    -- File managers
+    {
+        rule_any = {
+            class = {
+                "Pcmanfm",
+                "Nemo",
+                "Thunar",
+            },
+        },
+        except_any = {
+            type = { "dialog" },
+        },
+        properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.55 },
+    },
+
+    -- Scratchpad
+    {
+        rule_any = {
+            instance = {
+                "scratchpad",
+                "markdown_input",
+            },
+            class = {
+                "scratchpad",
+                "markdown_input",
+            },
+        },
+        properties = {
+            skip_taskbar = false,
+            floating = true,
+            ontop = false,
+            minimized = true,
+            sticky = false,
+            width = screen_width * 0.7,
+            height = screen_height * 0.75,
+        },
+    },
+
+    -- Music clients (usually a terminal running ncmpcpp)
+    {
+        rule_any = {
+            class = {
+                "music",
+            },
+            instance = {
+                "music",
+            },
+        },
+        properties = {
+            floating = true,
+            width = screen_width * 0.45,
+            height = screen_height * 0.50,
+        },
+    },
+
+    -- Image viewers
+    {
+        rule_any = {
+            class = {
+                "feh",
+                "Sxiv",
+            },
+        },
+        properties = {
+            floating = true,
+            width = screen_width * 0.7,
+            height = screen_height * 0.75,
+        },
+        callback = function(c)
+            awful.placement.centered(c, { honor_padding = true, honor_workarea = true })
+        end,
+    },
+
+    -- Steam guard
+    {
+        rule = { name = "Steam Guard - Computer Authorization Required" },
+        properties = { floating = true },
+        -- Such a stubborn window, centering it does not work
+        -- callback = function(c)
+        --     gears.timer.delayed_call(function()
+        --         awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
+        --     end)
+        -- end
+    },
+
+    -- MPV
+    {
+        rule = { class = "mpv" },
+        properties = {},
+        callback = function(c)
+            -- Make it floating, ontop and move it out of the way if the current tag is maximized
+            if awful.layout.get(awful.screen.focused()) == awful.layout.suit.max then
+                c.floating = true
+                c.ontop = true
+                c.width = screen_width * 0.30
+                c.height = screen_height * 0.35
+                awful.placement.bottom_right(c, {
+                    honor_padding = true,
+                    honor_workarea = true,
+                    margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2 },
+                })
+            end
+
+            -- Restore `ontop` after fullscreen is disabled
+            -- Sorta tries to fix: https://github.com/awesomeWM/awesome/issues/667
+            c:connect_signal("property::fullscreen", function()
+                if not c.fullscreen then
+                    c.ontop = true
+                end
+            end)
+        end,
+    },
+
+    -- Start application on specific workspace
+    -- ===================================================================
+    -- Browsing
+    {
+        rule_any = {
+            class = {
+                "firefox",
+                "Nightly",
+                "Vivaldi-stable",
+            },
+        },
+        except_any = {
+            role = { "GtkFileChooserDialog" },
+            instance = { "Toolkit" },
+            type = { "dialog" },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[1] },
+    },
+
+    -- Editing
+    {
+        rule_any = {
+            class = {
+                "^editor$",
+                "VSCodium",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[2] },
+    },
+
+    -- Games
+    {
+        rule_any = {
+            class = {
+                "Wine",
+            },
+            instance = {},
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[3] },
+    },
+
+    -- Chatting
+    {
+        rule_any = {
+            class = {
+                "discord",
+                "Signal",
+                "Slack",
+                "zoom",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[4] },
+    },
+
+    -- System monitoring
+    {
+        rule_any = {
+            class = {
+                "htop",
+                "bottom",
+            },
+            instance = {
+                "htop",
+                "bottom",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[5] },
+    },
+
+    -- Image editing
+    {
+        rule_any = {
+            class = {
+                "Gimp",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[6] },
+    },
+
+    -- Mail
+    {
+        rule_any = {
+            class = {
+                "email",
+            },
+            instance = {
+                "email",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[7] },
+    },
+
+    -- Game clients/launchers
+    {
+        rule_any = {
+            class = {
+                "Steam",
+                "battle.net.exe",
+                "Lutris",
+            },
+            name = {
+                "Steam",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[8] },
+    },
+
+    -- Miscellaneous
+    -- All clients that I want out of my way when they are running
+    {
+        rule_any = {
+            class = {
+                "torrent",
+                "Transmission",
+                "Deluge",
+                "VirtualBox Manager",
+                "KeePassXC",
+            },
+            instance = {
+                "torrent",
+                "qemu",
+            },
+        },
+        except_any = {
+            type = { "dialog" },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[10] },
+    },
+}
+
+-- Signals
+-- ===================================================================
+if beautiful.border_width > 0 then
+    client.connect_signal("focus", function(c)
+        c.border_color = beautiful.border_focus
+    end)
+    client.connect_signal("unfocus", function(c)
+        c.border_color = beautiful.border_normal
+    end)
+end
+
+-- Set mouse resize mode (live or after)
+awful.mouse.resize.set_mode("live")
+
+-- Restore geometry for floating clients
+-- (for example after swapping from tiling mode to floating mode)
+tag.connect_signal("property::layout", function(t)
+    for k, c in ipairs(t:clients()) do
+        if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
+            local cgeo = awful.client.property.get(c, "floating_geometry")
+            if cgeo then
+                c:geometry(awful.client.property.get(c, "floating_geometry"))
+            end
+        end
+    end
+end)
+
+client.connect_signal("manage", function(c)
+    if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
+        awful.client.property.set(c, "floating_geometry", c:geometry())
+    end
+end)
+
+client.connect_signal("property::geometry", function(c)
+    if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
+        awful.client.property.set(c, "floating_geometry", c:geometry())
+    end
+end)
+
+-- When switching to a tag with urgent clients, raise them.
+-- This fixes the issue (visual mismatch) where after switching to
+-- a tag which includes an urgent client, the urgent client is
+-- unfocused but still covers all other windows (even the currently
+-- focused window).
+awful.tag.attached_connect_signal(s, "property::selected", function()
+    local urgent_clients = function(c)
+        return awful.rules.match(c, { urgent = true })
+    end
+    for c in awful.client.iterate(urgent_clients) do
+        if c.first_tag == mouse.screen.selected_tag then
+            client.focus = c
+        end
+    end
+end)
+
+-- Enable sloppy focus, so that focus follows mouse.
+-- client.connect_signal("mouse::enter", function(c)
+-- 	c:activate { context = "mouse_enter", raise = false }
+-- end)
+
+-- Raise focused clients automatically
+client.connect_signal("focus", function(c)
+    c:raise()
+end)
+
+-- Focus all urgent clients automatically
+-- client.connect_signal("property::urgent", function(c)
+-- 	if c.urgent then
+-- 		c.minimized = false
+-- 		c:jump_to()
+-- 	end
+-- end)
+
+-- Disable ontop when the client is not floating, and restore ontop if needed
+-- when the client is floating again
+-- I never want a non floating client to be ontop.
+client.connect_signal("property::floating", function(c)
+    if c.floating then
+        if c.restore_ontop then
+            c.ontop = c.restore_ontop
+        end
+    else
+        c.restore_ontop = c.ontop
+        c.ontop = false
+    end
+end)
+
+-- Hide all windows when a splash is shown
+awesome.connect_signal("widgets::splash::visibility", function(vis)
+    local t = screen.primary.selected_tag
+    if vis then
+        for idx, c in ipairs(t:clients()) do
+            c.hidden = true
+        end
+    else
+        for idx, c in ipairs(t:clients()) do
+            c.hidden = false
+        end
+    end
+end)
+
+-- Decorations
+-- ===================================================================
+local wibox = require("wibox")
+-- Apply rounded corners to clients if needed
+if beautiful.border_radius and beautiful.border_radius > 0 then
+    client.connect_signal("manage", function(c, startup)
+        if not c.fullscreen and not c.maximized then
+            c.shape = helpers.rrect(beautiful.border_radius)
+        end
+    end)
+
+    -- Fullscreen and maximized clients should not have rounded corners
+    local function no_round_corners(c)
+        if c.fullscreen or c.maximized then
+            c.shape = gears.shape.rectangle
+        else
+            c.shape = helpers.rrect(beautiful.border_radius)
+        end
+    end
+
+    client.connect_signal("property::fullscreen", no_round_corners)
+    client.connect_signal("property::maximized", no_round_corners)
+
+    beautiful.snap_shape = helpers.rrect(beautiful.border_radius * 2)
+else
+    beautiful.snap_shape = gears.shape.rectangle
+end
+
+function decorations.show(c)
+    if not c.custom_decoration or not c.custom_decoration[beautiful.titlebar_position] then
+        awful.titlebar.show(c, beautiful.titlebar_position)
+    end
+end
+
+-- Dummy titlebar
+client.connect_signal("request::titlebars", function(c)
+    awful.titlebar(c)
+end)
+
+-- Startup apps
+-- ===================================================================
+-- Spawn once
+-- awful.spawn.once({}, false)
+-- With shell
+-- awful.spawn.with_shell({}, false)
 awful.spawn.with_shell("bash ~/.screenlayout/layout-1.sh")
--- awful.spawn.with_shell("pkill http-server")
--- awful.spawn.with_shell("http-server ~/.config/chevron/dist")
--- awful.spawn.with_shell("sleep 20s && conky -c ~/.config/conky/mocha.conf")
--- awful.spawn.with_shell("kdeconnect-indicator")
-awful.spawn.with_shell("feh --no-fehbg --bg-fill ~/Pictures/alena-aenami-stardust-1k.jpg")
+awful.util.spawn("nm-applet")
+
+
 
 -- Garbage collection
-
+-- ===================================================================
 collectgarbage("setpause", 110)
 collectgarbage("setstepmul", 1000)
-gears.timer({
-    timeout = 5,
-    autostart = true,
-    call_now = true,
-    callback = function()
-        collectgarbage("collect")
-    end,
-})
