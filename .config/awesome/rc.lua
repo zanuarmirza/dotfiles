@@ -163,7 +163,7 @@ local function set_wallpaper(s)
 
         -- >> Method 2: Set theme's wallpaper with feh
         -- awful.spawn.with_shell("feh --bg-fill " .. wallpaper)
-        awful.spawn.with_shell("feh --no-fehbg --bg-fill ~/Pictures/alena-aenami-stardust-1k.jpg")
+        awful.spawn.with_shell("feh --no-fehbg --bg-fill ~/Pictures/wallpaper-1-upscale.jpeg")
 
         -- >> Method 3: Set last wallpaper with feh
         -- awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
