@@ -84,10 +84,10 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
     -- The following command requires plug-ins "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", and optionally "kyazdani42/nvim-web-devicons" for icon support
-    vim.api.nvim_set_keymap('n', '<leader>vd', '<cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>vd', '<cmd>FzfLua diagnostics_document<CR>', { noremap = true, silent = true })
     -- If you don't want to use the telescope plug-in but still want to see all the errors/warnings, comment out the telescope line and uncomment this:
-    vim.api.nvim_set_keymap('n', '<leader>VD', '<cmd>lua vim.diagnostic.setqflist()<CR>',
-        { noremap = true, silent = true })
+
+    vim.api.nvim_set_keymap('n', '<leader>VD', '<cmd>FzfLua diagnostics_workspace<CR>', { noremap = true, silent = true })
     vim.api.nvim_set_keymap('n', '<leader>VE',
         '<cmd>lua vim.diagnostic.setqflist({severity=vim.diagnostic.severity.ERROR})<CR>',
         { noremap = true, silent = true })
