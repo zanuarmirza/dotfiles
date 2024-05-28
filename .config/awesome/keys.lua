@@ -216,6 +216,9 @@ keys.globalkeys = gears.table.join(
     awful.key({ mod }, "Right", function()
         awful.client.focus.bydirection("right")
     end, { description = "focus right", group = "client" }),
+    awful.key({ mod, }, "o", function() awful.client.movetoscreen() end,
+        { description = "move to screen", group = "client" }),
+
 
     -- Urgent or Undo:
     -- Jump to urgent client or (if there is no such client) go back
