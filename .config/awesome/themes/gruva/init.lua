@@ -397,7 +397,9 @@ end)
 -- ░█▄█░░█░░█▀▄░█▀█░█▀▄
 -- ░▀░▀░▀▀▀░▀▀░░▀░▀░▀░▀
 -- Create a wibox for each screen and add it
-for s in screen do
+
+
+awful.screen.connect_for_each_screen(function(s)
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt({ prompt = " Run: ", fg = beautiful.wibar_fg })
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -511,6 +513,7 @@ for s in screen do
         style = {
             font = beautiful.tasklist_font,
             bg = beautiful.tasklist_bg_normal,
+            shape  = gears.shape.rounded_bar,
         },
         layout = {
             spacing = dpi(4),
@@ -541,12 +544,8 @@ for s in screen do
 
             },
             -- border_width = dpi(2),
-            shape  = gears.shape.rounded_bar,
-            id     = "bg_role",
-            -- id = "background_role",
-            fg     = beautiful.magenta,
-            bg     = beautiful.light_bg,
-
+            -- id     = "bg_role",
+            id = "background_role",
             widget = wibox.container.background,
         },
     })
@@ -619,7 +618,7 @@ for s in screen do
 
     -- Place bar at the top and add margins
     awful.placement.top(s.mywibox, { margins = beautiful.screen_margin * 0 }) -- No margin
-end
+end)
 
 -- ░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀█░█▀▀
 -- ░█░█░█▀▀░░█░░░█░░█░█░█░█░▀▀█
