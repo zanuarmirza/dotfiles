@@ -201,7 +201,7 @@ keys.globalkeys = gears.table.join(
     end, { description = "focus next by index", group = "client" }),
     awful.key({ mod, shift }, "z", function()
         awful.client.focus.byidx(-1)
-    end, { description = "focus next by index", group = "client" }),
+    end, { description = "focus prev by index", group = "client" }),
 
     -- Focus client by direction (arrow keys)
     awful.key({ mod }, "Down", function()
@@ -443,10 +443,10 @@ keys.clientkeys = gears.table.join(
     end),
 
     -- Switch clients
-    awful.key({ alt }, "Tab", function()
-        awesome.emit_signal("window_switcher::turn_on")
-        -- awful.client.focus.byidx(1)
-    end, { description = "focus next by index", group = "client" }),
+    -- awful.key({ alt }, "Tab", function()
+    --     awesome.emit_signal("window_switcher::turn_on")
+    --     -- awful.client.focus.byidx(1)
+    -- end, { description = "focus next by index", group = "client" }),
 
     -- Toggle floating
     awful.key({ mod, ctrl }, "space", function(c)
