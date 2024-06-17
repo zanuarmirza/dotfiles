@@ -124,6 +124,8 @@ return require('packer').startup(function(use)
     use 'nvim-lua/plenary.nvim'
     use 'mfussenegger/nvim-dap'
     use 'leoluz/nvim-dap-go'
+    use 'ray-x/go.nvim'
+    use 'ray-x/guihua.lua'
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
     use { 'mrcjkb/rustaceanvim', requires = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' } }
 

@@ -64,6 +64,10 @@ cmp.setup({
     formatting = cmp_format,
 
 })
+
+function ToggleInlay()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end
 lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr, remap = false }
@@ -83,6 +87,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+    vim.keymap.set("n", "ti", ToggleInlay, opts)
     -- The following command requires plug-ins "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", and optionally "kyazdani42/nvim-web-devicons" for icon support
     vim.api.nvim_set_keymap('n', '<leader>vd', '<cmd>FzfLua diagnostics_document<CR>', { noremap = true, silent = true })
     -- If you don't want to use the telescope plug-in but still want to see all the errors/warnings, comment out the telescope line and uncomment this:
@@ -94,9 +99,6 @@ lsp.on_attach(function(client, bufnr)
     vim.api.nvim_set_keymap('n', '<leader>li', '<cmd>EslintFixAll<CR>', { noremap = true, silent = true })
 end)
 
-function ToggleInlay()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end
 
 -- (Optional) Configure lua language server for neovim
 -- lsp.nvim_workspace()
@@ -177,6 +179,10 @@ lspconfig.tailwindcss.setup({
         },
     },
 })
+
+lspconfig.biome.setup{}
+lspconfig.clangd.setup{}
+
 -- lspconfig.rust_analyzer.setup {
 --   -- Other Configs ...
 --   settings = {
