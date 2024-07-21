@@ -61,6 +61,52 @@ awesome.connect_signal("evil::ram", function(used, total)
     memory_widget:get_children_by_id("text")[1].markup = tostring(used) .. " MB"
 end)
 
+-- Disk widget
+-- ===================================================================
+local disk_widget = wibox.widget({
+    {
+        {
+            {
+                {
+                    id = "icon",
+                    text = "",
+                    forced_width = dpi(30),
+                    align = "center",
+                    valign = "center",
+                    font = beautiful.wibar_icon_font,
+                    widget = wibox.widget.textbox,
+                },
+                -- fixing font centering
+                right = dpi(3),
+                widget = wibox.container.margin,
+            },
+            bg = beautiful.darkyellow,
+            fg = beautiful.light_bg,
+            widget = wibox.widget.background,
+        },
+        {
+            {
+                id = "text",
+                font = beautiful.wibar_font,
+                widget = wibox.widget.textbox,
+            },
+            left = dpi(5),
+            right = dpi(5),
+            widget = wibox.container.margin,
+        },
+        layout = wibox.layout.fixed.horizontal,
+    },
+    fg = beautiful.light_bg,
+    bg = beautiful.yellow,
+    widget = wibox.container.background,
+})
+
+awesome.connect_signal("evil::disk", function(cpu_idle)
+    disk_widget:get_children_by_id("text")[1].markup = tostring(cpu_idle) .. "%"
+end)
+
+
+
 -- Clock widget
 -- ===================================================================
 local clock_widget = wibox.widget({
@@ -598,6 +644,7 @@ awful.screen.connect_for_each_screen(function(s)
             {
                 s.index == 1 and weather_widget,
                 memory_widget,
+                disk_widget,
                 cpu_widget,
                 clock_widget,
                 s.index == 1 and s.systray,
