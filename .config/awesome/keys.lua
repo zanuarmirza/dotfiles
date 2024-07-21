@@ -253,7 +253,7 @@ keys.globalkeys = gears.table.join(
     end, { description = "reload awesome", group = "awesome" }),
 
     -- Quit Awesome
-    awful.key({ mod, shift }, "q", function()
+    awful.key({ mod, shift, ctrl }, "q", function()
         awesome.quit()
     end, { description = "quit awesome", group = "awesome" }),
     awful.key({ mod, shift }, "x", function()

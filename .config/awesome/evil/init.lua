@@ -1,6 +1,7 @@
 -- Monitoring
 require("evil.cpu")
 require("evil.ram")
+require("evil.disk")
 
 -- User controlled
 require("evil.volume")
