@@ -82,6 +82,9 @@ vim.keymap.set('n', '<C-w><C-h>', '<C-w>10>')
 vim.keymap.set('n', '<C-w><C-j>', '<C-w>10+')
 vim.keymap.set('n', '<C-w><C-k>', '<C-w>10-')
 
+
+vim.keymap.set('n', '<C-s>', '<cmd>w<cr>')
+
 -- buffer switch
 vim.keymap.set("n", "<leader>bn", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bnext<cr>", { desc = "Next buffer" })

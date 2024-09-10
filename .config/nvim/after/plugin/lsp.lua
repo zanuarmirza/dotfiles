@@ -6,7 +6,7 @@ local lsp = require('lsp-zero').preset({
 })
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'tsserver', 'eslint' },
+    ensure_installed = { 'eslint' },
     handlers = {
         function(server_name)
             require('lspconfig')[server_name].setup({})
@@ -141,7 +141,7 @@ lspconfig.denols.setup {
 
 lspconfig.graphql.setup {}
 
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
     root_dir = lspconfig.util.root_pattern("package.json"),
     single_file_support = false,
     on_attach = on_attach,
