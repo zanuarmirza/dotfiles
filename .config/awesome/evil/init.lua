@@ -10,4 +10,4 @@ require("evil.playerctl")
 -- require("evil.battery")
 
 -- Internet access required
-require("evil.weather")
+-- require("evil.weather")

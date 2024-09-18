@@ -642,7 +642,6 @@ awful.screen.connect_for_each_screen(function(s)
                 layout = wibox.layout.fixed.horizontal,
             },
             {
-                s.index == 1 and weather_widget,
                 memory_widget,
                 disk_widget,
                 cpu_widget,
