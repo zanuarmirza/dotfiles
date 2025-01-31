@@ -181,7 +181,18 @@ lspconfig.tailwindcss.setup({
 })
 
 lspconfig.biome.setup{}
+lspconfig.wgsl_analyzer.setup{}
 lspconfig.clangd.setup{}
+lspconfig.zls.setup{}
+lspconfig.docker_compose_language_service.setup{}
+local function set_filetype(pattern, filetype)
+    vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+        pattern = pattern,
+        command = "set filetype=" .. filetype,
+    })
+end
+
+set_filetype({ "docker-compose.yaml" }, "yaml.docker-compose")
 
 -- lspconfig.rust_analyzer.setup {
 --   -- Other Configs ...
