@@ -34,5 +34,5 @@ vim.keymap.set("n", "<leader>df", ":Gvdiffsplit <CR>")
 vim.keymap.set("n", "<leader>DF", "viwy <C-w>q :Gvdiffsplit <C-r>\"~1<CR>")
 
 vim.keymap.set("n", "<leader>pd", ":Gvdiffsplit !~1<CR>")
-
+vim.keymap.set("n", "cn", "<cmd>cnext<CR>zz", {})
 return { 'tpope/vim-fugitive' }
