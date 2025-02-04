@@ -29,6 +29,16 @@ return {
             { "williamboman/mason-lspconfig.nvim" }, -- Optional
         },
         config = function()
+            local lsp_defaults = require('lspconfig').util.default_config
+
+            -- Add cmp_nvim_lsp capabilities settings to lspconfig
+            -- This should be executed before you configure any language server
+            lsp_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lsp_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+            )
+
             function ToggleInlay()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -242,8 +252,12 @@ return {
         { "hrsh7th/cmp-nvim-lua" },     -- Optional
 
         -- Snippets
-        { "L3MON4D3/LuaSnip" },             -- Required
         { "rafamadriz/friendly-snippets" }, -- Optional
+    },
+    {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        build = "make install_jsregexp"
     },
 
     {
