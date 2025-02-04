@@ -40,6 +40,7 @@
   "qf_helper.nvim": { "branch": "master", "commit": "62e94495385a06f5143527548c348f4a9df2e704" },
   "rustaceanvim": { "branch": "master", "commit": "f03035fa03ccb36cd26d0792c946fbacba1d1a39" },
   "symbols-outline.nvim": { "branch": "master", "commit": "564ee65dfc9024bdde73a6621820866987cbb256" },
+  "telescope-luasnip.nvim": { "branch": "master", "commit": "07a2a2936a7557404c782dba021ac0a03165b343" },
   "telescope.nvim": { "branch": "master", "commit": "c1a2af0af69e80e14e6b226d3957a064cd080805" },
   "trouble.nvim": { "branch": "main", "commit": "6f380b8826fb819c752c8fd7daaee9ef96d4c689" },
   "undotree": { "branch": "master", "commit": "2556c6800b210b2096b55b66e74b4cc1d9ebbe4f" },
