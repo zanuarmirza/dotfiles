@@ -132,10 +132,21 @@ keys.globalkeys = gears.table.join(
         description = "only view tag",
         group = "tag",
         on_press = function(index)
-            local screen = awful.screen.focused()
-            local tag = screen.tags[index]
-            if tag then
-                tag:view_only()
+            -- Use first screen for numbers 1-5
+            if index <= 5 then
+                local tag = screen[1].tags[index]
+                if tag then
+                    tag:view_only()
+                    awful.screen.focus(screen[1])
+                end
+            -- Use second screen for numbers 6-9,0 (index 10)
+            else
+                local second_screen_index = index - 5  -- Convert 6-10 to 1-5
+                local tag = screen[2].tags[second_screen_index]
+                if tag then
+                    tag:view_only()
+                    awful.screen.focus(screen[2])
+                end
             end
         end,
     }),
@@ -159,9 +170,19 @@ keys.globalkeys = gears.table.join(
         group = "tag",
         on_press = function(index)
             if client.focus then
-                local tag = client.focus.screen.tags[index]
-                if tag then
-                    client.focus:move_to_tag(tag)
+                -- Use first screen for numbers 1-5
+                if index <= 5 then
+                    local tag = screen[1].tags[index]
+                    if tag then
+                        client.focus:move_to_tag(tag)
+                    end
+                -- Use second screen for numbers 6-9,0 (index 10)
+                else
+                    local second_screen_index = index - 5  -- Convert 6-10 to 1-5
+                    local tag = screen[2].tags[second_screen_index]
+                    if tag then
+                        client.focus:move_to_tag(tag)
+                    end
                 end
             end
         end,
@@ -271,30 +292,30 @@ keys.globalkeys = gears.table.join(
 
 
     -- Resize focused client or layout factor
-    awful.key({ mod, ctrl }, "Down", function(c)
+    awful.key({ mod, "Control"  }, "Down", function(c)
         helpers.resize_dwim(client.focus, "down")
     end),
-    awful.key({ mod, ctrl }, "Up", function(c)
+    awful.key({ mod, "Control"  }, "Up", function(c)
         helpers.resize_dwim(client.focus, "up")
     end),
-    awful.key({ mod, ctrl }, "Left", function(c)
+    awful.key({ mod, "Control"  }, "Left", function(c)
         helpers.resize_dwim(client.focus, "left")
     end),
-    awful.key({ mod, ctrl }, "Right", function(c)
+    awful.key({ mod, "Control"  }, "Right", function(c)
         helpers.resize_dwim(client.focus, "right")
     end),
-    awful.key({ mod, ctrl }, "j", function(c)
-        helpers.resize_dwim(client.focus, "down")
-    end),
-    awful.key({ mod, ctrl }, "k", function(c)
-        helpers.resize_dwim(client.focus, "up")
-    end),
-    awful.key({ mod, ctrl }, "h", function(c)
-        helpers.resize_dwim(client.focus, "left")
-    end),
-    awful.key({ mod, ctrl }, "l", function(c)
-        helpers.resize_dwim(client.focus, "right")
-    end),
+    -- awful.key({ mod, ctrl }, "j", function(c)
+    --     helpers.resize_dwim(client.focus, "down")
+    -- end),
+    -- awful.key({ mod, ctrl }, "k", function(c)
+    --     helpers.resize_dwim(client.focus, "up")
+    -- end),
+    -- awful.key({ mod, ctrl }, "h", function(c)
+    --     helpers.resize_dwim(client.focus, "left")
+    -- end),
+    -- awful.key({ mod, ctrl }, "l", function(c)
+    --     helpers.resize_dwim(client.focus, "right")
+    -- end),
 
     -- Focus restored client
     awful.key({ mod, shift }, "n", function()

@@ -131,9 +131,9 @@ local screen_height = awful.screen.focused().geometry.height
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    -- awful.layout.suit.floating,
+    awful.layout.suit.floating,
     -- awful.layout.suit.max,
-    --awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
     --awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
@@ -211,10 +211,16 @@ screen.connect_signal("property::geometry", set_wallpaper)
 --     -- })
 --     -- ...
 -- end)
+
 awful.screen.connect_for_each_screen(function(s)
     -- set top padding and bottom padding for top and bottom bars
     s.padding = { top = 10, left = 0, right = 0, bottom = 0 }
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    -- Create tags 1-5 for first screen, 6-0 for second screen
+    if s == screen[1] then
+        awful.tag({ "1", "2", "3", "4", "5" }, s, awful.layout.layouts[1])
+    else
+        awful.tag({ "6", "7", "8", "9", "0" }, s, awful.layout.layouts[1]) 
+    end
 end)
 
 
@@ -796,8 +802,6 @@ end)
 -- awful.spawn.with_shell({}, false)
 awful.spawn.with_shell("bash ~/.screenlayout/layout-1.sh")
 awful.util.spawn("nm-applet")
-
-
 
 -- Garbage collection
 -- ===================================================================
