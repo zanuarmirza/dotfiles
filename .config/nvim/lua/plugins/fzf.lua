@@ -10,9 +10,6 @@ return {{
                     layout = "vertical"
                 }
             },
-            files   = {
-                { fzf_opts = { ['--keep-right'] = '' } }
-            },
         })
 
         local m = require("fzf-lua")

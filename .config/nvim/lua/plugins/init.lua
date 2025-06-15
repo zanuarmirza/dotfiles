@@ -1,13 +1,14 @@
 return {
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.1',
         -- or                            , branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
 
 
     -- git plugins
-    {'sindrets/diffview.nvim'},
+    { 'sindrets/diffview.nvim' },
     -- use('airblade/vim-gitgutter')
 
     -- use('RRethy/nvim-treesitter-textsubjects')
@@ -38,7 +39,7 @@ return {
     -- ------------ NAVIGATION ----------------------------------
 
     --use ('JoosepAlviste/nvim-ts-context-commentstring')
-    {'windwp/nvim-ts-autotag'},
+    { 'windwp/nvim-ts-autotag' },
     -- use('jose-elias-alvarez/null-ls.nvim')
 
     -- use 'karb94/neoscroll.nvim'
@@ -46,12 +47,22 @@ return {
     -- use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
 
 
-    {'nvim-lua/plenary.nvim'},
-    {'ray-x/go.nvim'},
-    {'ray-x/guihua.lua'},
-    { 'mrcjkb/rustaceanvim', dependencies = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' } },
+    { 'nvim-lua/plenary.nvim' },
+    { 'ray-x/go.nvim' },
+    { 'ray-x/guihua.lua' },
+    { 'mrcjkb/rustaceanvim',   dependencies = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' } },
 
-    {'Exafunction/codeium.vim'},
+    {
+        "Exafunction/windsurf.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "hrsh7th/nvim-cmp",
+        },
+        config = function()
+            require("codeium").setup({
+            })
+        end
+    },
     {
         "iamcco/markdown-preview.nvim",
         build = "cd app && npm install",
@@ -61,4 +72,5 @@ return {
         end,
         ft = { "markdown" },
     },
+
 }

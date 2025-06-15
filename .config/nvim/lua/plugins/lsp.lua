@@ -22,7 +22,7 @@ return {
     },
     {
         "neovim/nvim-lspconfig",
-        event = { 'BufReadPre', 'BufNewFile' },
+        lazy = false,
         dependencies = {
             { "hrsh7th/cmp-nvim-lsp" },              -- Required
             { "williamboman/mason.nvim" },
@@ -118,20 +118,39 @@ return {
                     vim.api.nvim_set_keymap(
                         "n",
                         "<leader>li",
-                        "<cmd>EslintFixAll<CR>",
+                        "<cmd>LspEslintFixAll<CR>",
                         { noremap = true, silent = true }
                     )
                 end,
             })
-            require("mason-lspconfig").setup({
-                ensure_installed = { "eslint" },
-                handlers = {
-                    function(server_name)
-                        require("lspconfig")[server_name].setup({})
-                    end,
-                },
-            })
+            require("mason-lspconfig").setup({})
 
+            vim.lsp.config('ts_ls', {
+                on_attach = function(client,bufnr)
+                    -- ts_ls provides `source.*` code actions that apply to the whole file. These only appear in
+                    -- `vim.lsp.buf.code_action()` if specified in `context.only`.
+                    vim.api.nvim_buf_create_user_command(0, 'LspTypescriptSourceAction', function()
+                        local source_actions = vim.tbl_filter(function(action)
+                            return vim.startswith(action, 'source.')
+                        end, client.server_capabilities.codeActionProvider.codeActionKinds)
+
+                        vim.lsp.buf.code_action({
+                            context = {
+                                only = source_actions,
+                            },
+                        })
+                    end, {})
+                    vim.api.nvim_buf_create_user_command(0, 'LspOrganizeImports', function()
+                        local params = {
+                            command = "_typescript.organizeImports",
+                            arguments = { vim.api.nvim_buf_get_name(0) },
+                            title = "",
+                        }
+
+                        client:request_sync('workspace/executeCommand', params, nil, bufnr)
+                    end, {})
+                end,
+            })
             -- local ls = require('luasnip')
 
             -- (Optional) Configure lua language server for neovim
@@ -141,81 +160,16 @@ return {
             --     virtual_text = true
             -- })
 
-            local function organize_imports()
-                local params = {
-                    command = "_typescript.organizeImports",
-                    arguments = { vim.api.nvim_buf_get_name(0) },
-                    title = "",
-                }
-                vim.lsp.buf.execute_command(params)
-            end
-            local lspconfig = require("lspconfig")
+            -- lspconfig.denols.setup({
+            --     root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+            -- })
 
-            lspconfig.gopls.setup({
-                settings = {
-                    gopls = {
-                        hints = {
-                            assignVariableTypes = true,
-                            compositeLiteralFields = true,
-                            constantValues = true,
-                            functionTypeParameters = true,
-                            parameterNames = true,
-                            rangeVariableTypes = true,
-                        },
-                    },
-                },
-            })
-            lspconfig.denols.setup({
-                on_attach = on_attach,
-                root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-            })
-
-            lspconfig.graphql.setup({})
-
-            lspconfig.ts_ls.setup({
-                root_dir = lspconfig.util.root_pattern("package.json"),
-                single_file_support = false,
-                on_attach = on_attach,
-                capabilities = capabilities,
-                commands = {
-                    OrganizeImports = {
-                        organize_imports,
-                        description = "Organize Imports",
-                    },
-                },
-                settings = {
-                    typescript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = "all",
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
-                        },
-                    },
-                },
-            })
-            lspconfig.tailwindcss.setup({
-                settings = {
-                    tailwindCSS = {
-                        experimental = {
-                            classRegex = {
-                                { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                                { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                            },
-                        },
-                    },
-                },
-            })
-
-            lspconfig.biome.setup({})
-            lspconfig.wgsl_analyzer.setup({})
-            lspconfig.clangd.setup({})
-            lspconfig.zls.setup({})
-            lspconfig.docker_compose_language_service.setup({})
+            -- lspconfig.graphql.setup({})
+            -- lspconfig.biome.setup({})
+            -- lspconfig.wgsl_analyzer.setup({})
+            -- lspconfig.clangd.setup({})
+            -- lspconfig.zls.setup({})
+            -- lspconfig.docker_compose_language_service.setup({})
             local function set_filetype(pattern, filetype)
                 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
                     pattern = pattern,
@@ -224,24 +178,6 @@ return {
             end
 
             set_filetype({ "docker-compose.yaml" }, "yaml.docker-compose")
-
-            -- lspconfig.rust_analyzer.setup {
-            --   -- Other Configs ...
-            --   settings = {
-            --     ["rust-analyzer"] = {
-            --       -- Other Settings ...
-            --       procMacro = {
-            --         ignored = {
-            --             leptos_macro = {
-            --                 -- optional: --
-            --                 -- "component",
-            --                 "server",
-            --             },
-            --         },
-            --       },
-            --     },
-            --   }
-            -- }
         end,
     }, -- Required
     dependencies = {
@@ -279,8 +215,9 @@ return {
             local cmp_select = { behavior = cmp.SelectBehavior.Select }
             cmp.setup({
                 sources = {
+                    { name = "codeium" },
                     { name = "nvim_lsp" },
-                    { name = "nvim_lua" },
+                    { name = "nvim_lua" }
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
