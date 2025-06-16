@@ -1,26 +1,25 @@
-local function organize_imports()
-    local params = {
-        command = "_typescript.organizeImports",
-        arguments = { vim.api.nvim_buf_get_name(0) },
-        title = "",
-    }
-    vim.lsp.buf.execute_command(params)
-end
 return {
-    commands = {
-        organize_imports = {
-            organize_imports,
-            description = "Organize Imports",
-        },
-    },
     settings = {
-        ts_ls = {
+        typescript = {
             inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all'
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                 includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+        javascript = {
+            inlayHints = {
+                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all'
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayVariableTypeHints = true,
+
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
                 includeInlayPropertyDeclarationTypeHints = true,
                 includeInlayFunctionLikeReturnTypeHints = true,
                 includeInlayEnumMemberValueHints = true,
